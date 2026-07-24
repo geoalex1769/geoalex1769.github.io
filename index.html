@@ -20,6 +20,7 @@
     --teal:#1F7A6D;
     --teal-l:#3FB6A8;
     --ochre:#C19A45;
+    --plum:#6B4E7D;
     --muted:#5C6B6A;
     --text:#152327;
     --shadow:0 1px 2px rgba(12,36,41,.06),0 8px 24px rgba(12,36,41,.07);
@@ -140,6 +141,7 @@
     font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.12em;color:#fff;background:var(--teal);
     padding:3px 9px;border-radius:5px;display:inline-block;
   }
+  .pkg[data-cat="lite"] .code{background:var(--plum)}
   .pkg[data-cat="senior"] .code{background:var(--ink)}
   .pkg[data-cat="programa"] .code{background:var(--ochre)}
   .pkg[data-cat="producto"] .code{background:var(--coral)}
@@ -160,6 +162,17 @@
     padding:11px;border-radius:9px;font-family:'Space Grotesk';font-weight:600;font-size:14px;transition:background .15s;
   }
   .pkg .cta:hover{background:var(--coral)}
+
+  /* ---------- escalón L ---------- */
+  .pkg-up{
+    font-family:'IBM Plex Mono';font-size:11px;letter-spacing:.04em;color:var(--plum);
+    background:rgba(107,78,125,.09);border-radius:6px;padding:5px 9px;display:inline-block;
+  }
+  .res-up{
+    margin:0 26px 26px;padding:14px 16px;border-left:3px solid var(--plum);
+    background:rgba(107,78,125,.07);border-radius:0 9px 9px 0;font-size:13.5px;color:var(--muted);line-height:1.55;
+  }
+  .res-up b{color:var(--plum);font-family:'Space Grotesk'}
 
   /* ---------- quiz ---------- */
   .quiz-wrap{max-width:720px;margin:0 auto}
@@ -301,7 +314,7 @@
   <div class="sec-head">
     <div>
       <h2>Catálogo de paquetes</h2>
-      <p class="sub">Precios en pesos mexicanos. Todos se facturan más IVA. Los tiempos son estimados de entrega.</p>
+      <p class="sub">Precios en pesos mexicanos. Todos se facturan más IVA. Los tiempos son estimados de entrega. Los <b>paquetes L</b> arrancan desde $8,000 y su importe se acredita al paquete mayor si creces dentro de los 30 días siguientes.</p>
     </div>
     <button class="backbtn" onclick="goHome()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
@@ -358,6 +371,8 @@
         <ul class="inc" id="rInc" style="margin-top:10px"></ul>
       </div>
 
+      <div class="res-up" id="rUp" style="display:none"></div>
+
       <div class="alts">
         <h4>También podrían encajar</h4>
         <div class="alt-grid" id="altGrid"></div>
@@ -394,6 +409,7 @@
    DATOS DE PAQUETES (Sección A — públicos)
    ============================================================ */
 const CATS = [
+  {id:'lite',     label:'Paquetes Lite'},
   {id:'mid',      label:'Paquetes MID'},
   {id:'senior',   label:'Paquetes Senior'},
   {id:'programa', label:'Programas continuos'},
@@ -403,6 +419,52 @@ const CATS = [
 ];
 
 const PKGS = [
+  /* ---------- L · puerta de entrada (micro y PYME pequeña) ---------- */
+  {id:'L1',cat:'lite',name:'Radar de Zona',price:'$8,000',meta:'4–5 días hábiles',up:'M1',
+   forwho:'Emprendedor en etapa de idea, sin ubicación cerrada todavía, que quiere un primer filtro antes de gastar en un estudio completo.',
+   inc:['Cuestionario de diagnóstico guiado (sin llamada)','Perfil sociodemográfico exprés de la zona (radio 1 km, 6 indicadores clave)','Mini-reporte de 3–5 páginas con semáforo de viabilidad','1 mapa temático incluido en el reporte','Recomendación de siguiente paso','Entrega por correo, sin sesión en vivo']},
+  {id:'L2',cat:'lite',name:'Validador Exprés',price:'$13,700',meta:'7–8 días hábiles',up:'M1',
+   forwho:'PYME con una ubicación candidata concreta que quiere confirmarla antes de decidir si necesita el estudio completo.',
+   inc:['Cuestionario de diagnóstico guiado','Perfil sociodemográfico exprés (radio 1 km)','Mapeo básico de competencia directa (radio 1 km)','Reporte ligero de 6–8 páginas con recomendación','2 mapas temáticos incluidos en el reporte','Soporte 7 días por correo']},
+  {id:'L3',cat:'lite',name:'Radar de Competencia',price:'$12,400',meta:'5–6 días hábiles',up:'M1 · M6',
+   forwho:'Negocio que ya opera y quiere saber quién compite cerca, sin evaluar ninguna ubicación nueva.',
+   inc:['Cuestionario de diagnóstico guiado','Mapeo básico de competencia directa (radio 1 km)','Análisis de densidad y mapa de calor de competencia','Mini-reporte de 3–5 páginas con lectura del panorama competitivo','Recomendación de posicionamiento local']},
+  {id:'L4',cat:'lite',name:'Chequeo de E-commerce',price:'$12,900',meta:'4–5 días hábiles',up:'M10',
+   forwho:'Negocio con tienda en línea que quiere ver en el mapa de dónde vienen sus pedidos antes de decidir si abre punto físico.',
+   inc:['Cuestionario de diagnóstico guiado','Geolocalización de pedidos y mapa de calor de ventas','Identificación de zonas de concentración de demanda digital','Mini-reporte de 3–5 páginas con hallazgos','Recomendación sobre conveniencia de punto físico']},
+  {id:'L5',cat:'lite',name:'Territorio de Franquicia Mini',price:'$12,900',meta:'5–6 días hábiles',up:'M11',
+   forwho:'Franquiciante pequeño o franquiciatario individual que valida un territorio antes de firmar.',
+   inc:['Cuestionario de diagnóstico guiado','Validación de territorio para franquiciado individual','Verificación de solapamiento con territorios vecinos','Mini-reporte de 3–5 páginas con dictamen','Mapa del territorio validado']},
+  {id:'L6',cat:'lite',name:'Pulso de Tráfico',price:'$11,000',meta:'3–4 días hábiles',up:'M1 · M8',
+   forwho:'Negocio que ya tiene el local y quiere confirmar con datos de campo cuánta gente pasa realmente cerca.',
+   inc:['Cuestionario de diagnóstico guiado','Isócrona simple de 10 minutos (un solo modo)','Aforo peatonal manual en campo (1 punto, 1 día)','Mini-reporte de 3–5 páginas con lectura de afluencia','1 mapa de área de captación']},
+  {id:'L7',cat:'lite',name:'Mini Cartera de Clientes',price:'$11,900',meta:'4–5 días hábiles',up:'M5',
+   forwho:'Negocio con una lista de hasta 300 clientes que quiere ver dónde se concentran.',
+   inc:['Cuestionario de diagnóstico guiado','Geocodificación de hasta 300 clientes','Mapa de calor y hallazgos de concentración','Identificación de zonas frías y zonas de oportunidad','Mini-reporte de 3–5 páginas con recomendaciones de marketing local']},
+  {id:'L8',cat:'lite',name:'Geocodificación Mini',price:'$8,700',meta:'3 días hábiles',up:'M4',
+   forwho:'Negocio con una base pequeña (hasta 300 registros) que solo necesita el archivo limpio, geocodificado y enriquecido, sin análisis.',
+   inc:['Cuestionario de diagnóstico guiado','Geocodificación de hasta 300 registros','Validación y limpieza de direcciones','Enriquecimiento con NSE, AGEB y municipio','Entrega en CSV y Excel','Ficha de una página con el resumen de calidad']},
+  {id:'L9',cat:'lite',name:'Diagnóstico de Ruta Mini',price:'$10,500',meta:'3–4 días hábiles',up:'M7',
+   forwho:'Negocio con uno o dos vendedores que quiere saber si su ruta o su zona actual tiene sentido.',
+   inc:['Cuestionario de diagnóstico guiado','Diagnóstico exprés de una ruta o territorio de venta','Detección de huecos de cobertura y traslados improductivos','Mini-reporte de 3–5 páginas con propuesta de ajuste','1 mapa de la ruta o zona diagnosticada']},
+  {id:'L10',cat:'lite',name:'Radar de Ubicación Publicitaria',price:'$10,900',meta:'5–6 días hábiles',up:'M8',
+   forwho:'Marca pequeña que evalúa un espectacular, una valla o un punto de activación antes de comprometer presupuesto de medios.',
+   inc:['Cuestionario de diagnóstico guiado','Perfil sociodemográfico exprés de la audiencia en la zona','Isócrona simple de exposición (10 minutos, un modo)','Mini-reporte de 3–5 páginas con afinidad audiencia–ubicación','1 mapa de cobertura']},
+  {id:'L11',cat:'lite',name:'Chequeo de Flujo Turístico',price:'$10,000',meta:'4 días hábiles',up:'M12',
+   forwho:'Negocio en destino turístico que quiere confirmar estacionalidad y perfil de visitante antes de invertir.',
+   inc:['Cuestionario de diagnóstico guiado','Análisis mini de flujo turístico (1 punto, datos secundarios)','Curva de estacionalidad de temporada alta y baja','Mini-reporte de 3–5 páginas con lectura de demanda flotante','1 mapa de concentración de visitantes']},
+  {id:'L12',cat:'lite',name:'Dossier de Franquicia Mini',price:'$8,000',meta:'3–4 días hábiles',up:'M11',
+   forwho:'Franquiciante que necesita un dossier de territorio para vender una franquicia concreta.',
+   inc:['Cuestionario de diagnóstico guiado','Dossier de territorio listo para presentar al prospecto','Perfil de la zona, competencia visible y potencial estimado','Mapa del territorio ofrecido']},
+  {id:'L13',cat:'lite',name:'Chequeo de Salud de Sucursal',price:'$9,100',meta:'2–3 días hábiles',up:'M6 · M9',
+   forwho:'Dueño que quiere un semáforo rápido de una sola sucursal, sin auditoría de red completa.',
+   inc:['Cuestionario de diagnóstico guiado','Scoring exprés de la sucursal con semáforo simple','Contraste entre desempeño reportado y potencial de la zona','Mini-reporte de 3–5 páginas con diagnóstico y siguiente paso','1 mapa del entorno inmediato']},
+  {id:'L14',cat:'lite',name:'Plusvalía Exprés',price:'$10,000',meta:'3–4 días hábiles',up:'un estudio inmobiliario a la medida',
+   forwho:'Inversionista pequeño que evalúa un predio o un local antes de comprar.',
+   inc:['Cuestionario de diagnóstico guiado','Análisis exprés de plusvalía de la zona (sin proyección a 5 años)','Lectura de tendencia de precio y dinámica de desarrollo urbano','Mini-reporte de 3–5 páginas con dictamen','1 mapa de la zona analizada']},
+  {id:'L15',cat:'lite',name:'Sentiment Snapshot',price:'$9,500',meta:'2–3 días hábiles',up:'un análisis de reputación a la medida',
+   forwho:'Negocio que quiere saber qué dicen las reseñas de sus dos competidores más cercanos.',
+   inc:['Cuestionario de diagnóstico guiado','Extracción y análisis de ~100 reseñas de hasta 2 competidores','Temas recurrentes de queja y de elogio','Mini-reporte de 3–5 páginas con oportunidades de diferenciación','1 mapa de ubicación de los competidores analizados']},
   /* ---------- MID ---------- */
   {id:'M1',cat:'mid',name:'Validador de Punto',price:'$15,000',meta:'10–14 días',
    forwho:'Emprendedor que abre su primer local o PYME que evalúa una sola ubicación candidata.',
@@ -512,16 +574,18 @@ const PKGS = [
 const QUESTIONS = [
   {kicker:'Perfil', text:'¿Cómo describirías tu organización hoy?',
    opts:[
-    {label:'Emprendedor o primer negocio', w:{M1:3,M2:1,X3:1}},
-    {label:'PYME o empresa pequeña', w:{M1:1,M2:1,M3:2,M4:1,M5:1}},
+    {label:'Apenas es una idea, todavía no abro', w:{L1:2,L2:1}},
+    {label:'Micro-negocio: un local, menos de 10 personas', w:{L3:1,L13:1,L15:1,L6:1}},
+    {label:'Emprendedor o primer negocio', w:{M1:3,M2:1,X3:1,L1:2,L2:2}},
+    {label:'PYME o empresa pequeña', w:{M1:1,M2:1,M3:2,M4:1,M5:1,L2:1,L3:1}},
     {label:'Empresa mediana o cadena en crecimiento', w:{M6:2,M9:2,M7:1,P3:1}},
     {label:'Corporativo o gran empresa', w:{S1:2,S2:1,S4:1,P1:1}},
     {label:'Fondo de inversión, multinacional o gobierno', w:{S3:2,S5:2}},
    ]},
   {kicker:'Escala', text:'¿Cuántas ubicaciones o sucursales operas actualmente?',
    opts:[
-    {label:'Ninguna, voy a abrir la primera', w:{M1:3,X3:2}},
-    {label:'Una, busco la segunda', w:{M2:2,M3:1}},
+    {label:'Ninguna, voy a abrir la primera', w:{M1:3,X3:2,L1:2,L2:2}},
+    {label:'Una, busco la segunda', w:{M2:2,M3:1,L13:1}},
     {label:'Entre 2 y 5', w:{M3:3,M6:1}},
     {label:'Entre 5 y 15', w:{M6:3,P3:1}},
     {label:'Entre 15 y 25', w:{M9:3,S1:1}},
@@ -529,18 +593,24 @@ const QUESTIONS = [
    ]},
   {kicker:'Objetivo', text:'¿Cuál es tu objetivo principal?',
    opts:[
-    {label:'Validar UNA ubicación específica', w:{M1:5,X3:2}},
+    {label:'Validar UNA ubicación específica', w:{M1:5,X3:2,L2:4,L1:2}},
     {label:'Comparar VARIAS ubicaciones candidatas', w:{M2:5,M3:1}},
     {label:'Planear una expansión de varias sucursales', w:{M6:4,M3:2,S2:1}},
-    {label:'Diagnosticar la salud de mi red actual', w:{S1:4,M9:3,S4:2}},
-    {label:'Optimizar mi fuerza de ventas o territorios', w:{M7:5}},
-    {label:'Diseñar o reordenar mis franquicias', w:{M11:5}},
-    {label:'Alinear mi tienda física con mi venta online', w:{M10:5}},
-    {label:'Evaluar una ubicación turística u hotelera', w:{M12:5}},
+    {label:'Diagnosticar la salud de mi red actual', w:{S1:4,M9:3,S4:2,L13:1}},
+    {label:'Saber si una sola sucursal está sana', w:{L13:6,M9:1}},
+    {label:'Optimizar mi fuerza de ventas o territorios', w:{M7:5,L9:2}},
+    {label:'Diseñar o reordenar mis franquicias', w:{M11:5,L5:4,L12:3}},
+    {label:'Vender una franquicia con un dossier de territorio', w:{L12:6,M11:1}},
+    {label:'Alinear mi tienda física con mi venta online', w:{M10:5,L4:3}},
+    {label:'Evaluar una ubicación turística u hotelera', w:{M12:5,L11:4}},
     {label:'Comprar o fusionar una empresa (M&A)', w:{S3:5}},
     {label:'Encontrar sitio industrial o de nearshoring', w:{S5:5}},
-    {label:'Entender a mis clientes actuales', w:{M5:4,M4:2}},
-    {label:'Colocar publicidad exterior (OOH)', w:{M8:5}},
+    {label:'Entender a mis clientes actuales', w:{M5:4,M4:2,L7:2,L8:1}},
+    {label:'Colocar publicidad exterior (OOH)', w:{M8:5,L10:4}},
+    {label:'Saber quién compite cerca de mí', w:{L3:6,M1:1}},
+    {label:'Saber si por mi local pasa suficiente gente', w:{L6:6,M1:1}},
+    {label:'Saber qué dicen las reseñas de mis competidores', w:{L15:6}},
+    {label:'Evaluar la plusvalía de un predio o local', w:{L14:6}},
    ]},
   {kicker:'Sector', text:'¿En qué sector operas?',
    opts:[
@@ -557,12 +627,13 @@ const QUESTIONS = [
    opts:[
     {label:'Solo en punto físico', w:{}},
     {label:'Físico y online (omnicanal)', w:{M10:3}},
-    {label:'Solo online, quiero abrir físico', w:{M10:2,M3:1}},
+    {label:'Solo online, quiero abrir físico', w:{M10:2,M3:1,L4:3}},
     {label:'No aplica a mi caso', w:{}},
    ]},
   {kicker:'Presupuesto', text:'¿Cuál es tu presupuesto aproximado para este proyecto?',
    opts:[
-    {label:'Menos de $30,000', w:{M1:2,M2:1,M4:1,X3:2}},
+    {label:'Menos de $15,000', only:'lite', w:{}},
+    {label:'Entre $15,000 y $30,000', w:{M1:2,M2:1,M4:1,X3:2,L2:1}},
     {label:'$30,000 – $90,000', w:{M3:2,M5:1,M7:2,M8:2}},
     {label:'$90,000 – $200,000', w:{M9:2,M10:1,M11:2,M12:2,S1:1}},
     {label:'$200,000 – $700,000', w:{S1:2,S3:2,S4:2}},
@@ -570,7 +641,7 @@ const QUESTIONS = [
    ]},
   {kicker:'Candidatos', text:'¿Cuántas ubicaciones candidatas necesitas evaluar?',
    opts:[
-    {label:'Solo una', w:{M1:1,X3:1,M12:1}},
+    {label:'Solo una', w:{M1:1,X3:1,M12:1,L2:1,L1:1}},
     {label:'Entre 2 y 3', w:{M2:2}},
     {label:'Entre 4 y 8', w:{M3:1,M6:1}},
     {label:'Muchas, o toda una región', w:{S2:1,S5:1,M6:1}},
@@ -578,8 +649,9 @@ const QUESTIONS = [
    ]},
   {kicker:'Datos', text:'¿Tienes una base de datos de clientes para analizar?',
    opts:[
-    {label:'Sí, quiero mapearla y limpiarla', w:{M4:4}},
-    {label:'Sí, quiero saber dónde están mis clientes', w:{M5:4}},
+    {label:'Sí, pero es pequeña (menos de 300 registros)', w:{L7:4,L8:3}},
+    {label:'Sí, quiero mapearla y limpiarla', w:{M4:4,L8:3}},
+    {label:'Sí, quiero saber dónde están mis clientes', w:{M5:4,L7:1}},
     {label:'Tengo historial de ventas para modelos predictivos', w:{M6:2,M9:2}},
     {label:'No tengo base de datos', w:{}},
    ]},
@@ -593,7 +665,7 @@ const QUESTIONS = [
    ]},
   {kicker:'Urgencia', text:'¿Qué tan pronto necesitas resultados?',
    opts:[
-    {label:'Muy pronto (cuestión de días)', w:{X3:3,M1:1}},
+    {label:'Muy pronto (cuestión de días)', w:{X3:3,M1:1,L13:3,L15:3,L1:2,L6:2}},
     {label:'En unas semanas', w:{M2:1,M3:1}},
     {label:'En meses, es una decisión estratégica', w:{S1:1,S2:1,S5:1}},
     {label:'Es algo continuo, sin fecha límite', w:{P1:1,P3:1,X1:1,X6:1}},
@@ -601,12 +673,12 @@ const QUESTIONS = [
   {kicker:'Equipo de venta', text:'¿Tienes una fuerza de ventas o rutas que organizar?',
    opts:[
     {label:'Sí, 10 o más vendedores o rutas', w:{M7:3}},
-    {label:'Sí, un equipo pequeño', w:{M7:1}},
+    {label:'Sí, un equipo pequeño (1 o 2 vendedores)', w:{M7:1,L9:4}},
     {label:'No, no aplica', w:{}},
    ]},
   {kicker:'Decisión', text:'¿A quién presentarás los resultados?',
    opts:[
-    {label:'A mí mismo (soy el dueño)', w:{M1:2,M2:1,M3:1}},
+    {label:'A mí mismo (soy el dueño)', w:{M1:2,M2:1,M3:1,L1:1}},
     {label:'A dirección o gerencia', w:{M6:1,M9:1,M10:1,M11:1}},
     {label:'Al comité directivo o CEO', w:{S1:2,S2:1,S4:1}},
     {label:'Al consejo de administración', w:{P4:3,S2:1}},
@@ -645,6 +717,7 @@ function renderPkgs(){
           <span class="inc-label">Incluye</span>
           <ul class="inc" style="margin-top:9px">${p.inc.map(i=>`<li>${i}</li>`).join('')}</ul>
         </div>
+        ${p.up?`<div class="pkg-up">↑ Crece hacia ${p.up} · crédito de 30 días</div>`:''}
         <a class="cta" href="${waHref(p)}" target="_blank" rel="noopener">Cotizar este paquete</a>
       </div>
     </article>`).join('');
@@ -662,7 +735,7 @@ const catalogPanel = document.getElementById('catalogPanel');
 const quizPanel = document.getElementById('quizPanel');
 
 function scrollToPanels(){window.scrollTo({top:0,behavior:'smooth'});}
-function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('mid');scrollToPanels();}
+function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('lite');scrollToPanels();}
 function openQuiz(){document.body.classList.add('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.add('active');restartQuiz();scrollToPanels();}
 function goHome(){document.body.classList.remove('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.remove('active');window.scrollTo({top:0,behavior:'smooth'});}
 
@@ -719,9 +792,27 @@ function pkgById(id){return PKGS.find(p=>p.id===id);}
 
 let resultSet = [];   // ids de los paquetes recomendados (top 3)
 
+/* Si el visitante declaró un presupuesto con tope (ej. menos de $15,000),
+   la recomendación se restringe a esa categoría: no tiene caso proponerle
+   un paquete que ya dijo que no puede pagar. */
+function budgetCap(){
+  for(let qi=0; qi<QUESTIONS.length; qi++){
+    const ai = answers[qi];
+    if(ai===null) continue;
+    const only = QUESTIONS[qi].opts[ai].only;
+    if(only) return only;
+  }
+  return null;
+}
+
 function showResult(){
   const scores = computeScores();
+  const cap = budgetCap();
   let ranked = Object.entries(scores).filter(([,v])=>v>0).sort((a,b)=>b[1]-a[1]);
+  if(cap){
+    const inCap = ranked.filter(([id])=>{ const p=pkgById(id); return p && p.cat===cap; });
+    ranked = inCap.length ? inCap : [['L1',0]];
+  }
   if(ranked.length===0) ranked=[['M1',0]];   // respaldo
   resultSet = ranked.slice(0,3).map(([id])=>id);
 
@@ -744,6 +835,14 @@ function renderResult(selectedId, scrollUp){
   document.getElementById('rMeta').textContent=top.meta;
   document.getElementById('rForwho').innerHTML=`<b style="font-family:'Space Grotesk';display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:4px">Diseñado para</b>${top.forwho}`;
   document.getElementById('rInc').innerHTML=top.inc.map(i=>`<li>${i}</li>`).join('');
+
+  const upBox=document.getElementById('rUp');
+  if(top.up){
+    upBox.innerHTML=`<b>Puedes empezar aquí y crecer después.</b> Si más adelante contratas ${top.up}, lo que pagues por este paquete se acredita íntegro al precio del mayor, siempre que lo hagas dentro de los 30 días naturales siguientes a la entrega.`;
+    upBox.style.display='block';
+  } else {
+    upBox.style.display='none';
+  }
 
   const alts = resultSet.filter(id=>id!==selectedId).map(pkgById);
   const altGrid=document.getElementById('altGrid');
