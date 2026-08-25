@@ -314,7 +314,7 @@
   <div class="sec-head">
     <div>
       <h2>Catálogo de paquetes</h2>
-      <p class="sub">Precios en pesos mexicanos. Todos se facturan más IVA. Los tiempos son estimados de entrega. Los <b>paquetes L</b> arrancan desde $8,000 y su importe se acredita al paquete mayor si creces dentro de los 30 días siguientes.</p>
+      <p class="sub">Precios en pesos mexicanos. Todos se facturan IVA incluido. Los tiempos son estimados de entrega. Los <b>paquetes L</b> arrancan desde $8,000 y su importe se acredita al paquete mayor si creces dentro de los 30 días siguientes.</p>
     </div>
     <button class="backbtn" onclick="goHome()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
@@ -409,7 +409,7 @@
    DATOS DE PAQUETES (Sección A — públicos)
    ============================================================ */
 const CATS = [
-  {id:'lite',     label:'Paquetes Lite'},
+  {id:'lite',     label:'Paquetes L · desde $8,000'},
   {id:'mid',      label:'Paquetes MID'},
   {id:'senior',   label:'Paquetes Senior'},
   {id:'programa', label:'Programas continuos'},
@@ -693,7 +693,7 @@ const grid = document.getElementById('pkgGrid');
 const filterBox = document.getElementById('filters');
 let activeCat = 'mid';
 
-function ivaPrice(p){return `${p} <span class="iva">+ IVA</span>`;}
+function ivaPrice(p){return `${p} <span class="iva">IVA incluido</span>`;}
 
 function renderFilters(){
   filterBox.innerHTML = CATS.map(c =>
@@ -724,7 +724,7 @@ function renderPkgs(){
 }
 
 function waHref(p){
-  const msg = encodeURIComponent(`Hola, me interesa el paquete ${p.id} — ${p.name} (${p.price} + IVA). ¿Podemos conversar?`);
+  const msg = encodeURIComponent(`Hola, me interesa el paquete ${p.id} — ${p.name} (${p.price} IVA incluido). ¿Podemos conversar?`);
   return `https://wa.me/523313035476?text=${msg}`;
 }
 
@@ -735,7 +735,7 @@ const catalogPanel = document.getElementById('catalogPanel');
 const quizPanel = document.getElementById('quizPanel');
 
 function scrollToPanels(){window.scrollTo({top:0,behavior:'smooth'});}
-function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('lite');scrollToPanels();}
+function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('mid');scrollToPanels();}
 function openQuiz(){document.body.classList.add('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.add('active');restartQuiz();scrollToPanels();}
 function goHome(){document.body.classList.remove('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.remove('active');window.scrollTo({top:0,behavior:'smooth'});}
 
@@ -831,7 +831,7 @@ function renderResult(selectedId, scrollUp){
 
   document.getElementById('rCode').textContent=top.id;
   document.getElementById('rName').textContent=top.name;
-  document.getElementById('rPrice').innerHTML=`${top.price} <span class="iva">+ IVA</span>`;
+  document.getElementById('rPrice').innerHTML=`${top.price} <span class="iva">IVA incluido</span>`;
   document.getElementById('rMeta').textContent=top.meta;
   document.getElementById('rForwho').innerHTML=`<b style="font-family:'Space Grotesk';display:block;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--teal);margin-bottom:4px">Diseñado para</b>${top.forwho}`;
   document.getElementById('rInc').innerHTML=top.inc.map(i=>`<li>${i}</li>`).join('');
@@ -851,7 +851,7 @@ function renderResult(selectedId, scrollUp){
       <button class="alt" type="button" onclick="selectAlt('${a.id}')">
         <span class="code mono">${a.id}</span>
         <h5>${a.name}</h5>
-        <div class="p">${a.price} <span class="iva">+ IVA</span></div>
+        <div class="p">${a.price} <span class="iva">IVA incluido</span></div>
         <div class="mono" style="font-size:12px;color:var(--muted);margin-top:3px">${a.meta}</div>
         <span class="alt-go mono">Ver detalles →</span>
       </button>`).join('');
@@ -860,7 +860,7 @@ function renderResult(selectedId, scrollUp){
     document.querySelector('.alts').style.display='none';
   }
 
-  const waMsg=encodeURIComponent(`Hola, hice el cuestionario y me interesa el paquete ${top.id} — ${top.name} (${top.price} + IVA). Me gustaría cotizarlo.`);
+  const waMsg=encodeURIComponent(`Hola, hice el cuestionario y me interesa el paquete ${top.id} — ${top.name} (${top.price} IVA incluido). Me gustaría cotizarlo.`);
   document.getElementById('waLink').href=`https://wa.me/523313035476?text=${waMsg}`;
 
   if(scrollUp){window.scrollTo({top:quizPanel.offsetTop-20,behavior:'smooth'});}
