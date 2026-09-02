@@ -217,6 +217,7 @@
   .res-banner .rprice{font-family:'Space Grotesk';font-weight:700;font-size:25px;margin-top:16px}
   .res-banner .rprice .iva{font-family:'IBM Plex Mono';font-size:13px;color:var(--teal-l)}
   .res-banner .rmeta{font-family:'IBM Plex Mono';font-size:12.5px;color:#9fb3af;margin-top:4px}
+  .res-banner .rdisclaimer{font-family:'IBM Plex Mono';font-size:11px;color:#9fb3af;margin-top:12px;line-height:1.6;max-width:44ch}
   .res-detail{background:var(--card);border:1px solid var(--line);border-top:none;border-radius:0 0 16px 16px;padding:26px 30px;margin:-14px 14px 0;position:relative;box-shadow:var(--shadow)}
   .res-detail .forwho{font-size:14.5px;margin-bottom:18px}
   .alts{margin-top:34px}
@@ -234,6 +235,7 @@
   .res-cta{margin-top:34px;background:var(--paper-2);border:1px solid var(--line);border-radius:14px;padding:26px;text-align:center}
   .res-cta h4{font-family:'Space Grotesk';font-size:20px;margin-bottom:6px}
   .res-cta p{color:var(--muted);font-size:14px;margin-bottom:18px}
+  .res-legal{margin-top:16px;padding-top:16px;border-top:1px dashed var(--line);font-family:'IBM Plex Mono';font-size:11.5px;color:var(--muted);line-height:1.7;text-align:left}
   .res-cta .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
   .btn-primary,.btn-ghost{text-decoration:none;font-family:'Space Grotesk';font-weight:600;font-size:14.5px;padding:13px 24px;border-radius:10px;transition:.15s;display:inline-flex;align-items:center;gap:9px}
   .btn-primary{background:var(--coral);color:#fff}
@@ -255,6 +257,7 @@
   .foot-contact a:hover{color:var(--coral)}
   .foot .note{font-family:'IBM Plex Mono';font-size:11.5px;color:#7f9590;max-width:30ch;line-height:1.8}
   .ivanote{text-align:center;font-family:'IBM Plex Mono';font-size:11.5px;color:#7f9590;margin-top:34px;border-top:1px solid rgba(255,255,255,.08);padding-top:22px}
+  .legalnote{text-align:center;font-family:'IBM Plex Mono';font-size:11px;color:#7f9590;max-width:680px;margin:14px auto 0;line-height:1.75}
 </style>
 </head>
 <body>
@@ -363,6 +366,7 @@
           <h2 id="rName"></h2>
           <div class="rprice" id="rPrice"></div>
           <div class="rmeta mono" id="rMeta"></div>
+          <div class="rdisclaimer mono">Recomendación automática y orientativa a partir de tus respuestas — no es una cotización cerrada.</div>
         </div>
       </div>
       <div class="res-detail">
@@ -388,6 +392,7 @@
           </a>
         </div>
         <div class="restart"><button onclick="restartQuiz()">↺ Responder de nuevo</button></div>
+        <p class="res-legal">Este cuestionario es una herramienta de autoservicio orientativa: la recomendación se calcula de forma automática a partir de tus respuestas y no constituye una cotización vinculante, una propuesta formal ni asesoría profesional. No genera relación contractual alguna entre las partes; la propuesta y el precio definitivos se acuerdan únicamente después de una conversación directa con el Asesor en Geomarketing. El cuestionario corre en tu navegador y no guarda ni envía tus respuestas.</p>
       </div>
     </div>
   </div>
@@ -402,6 +407,7 @@
     </div>
   </div>
   <div class="ivanote">Todos los precios están expresados en pesos mexicanos (MXN) antes de IVA · Al facturar se agrega el IVA correspondiente (16% general · 8% región fronteriza)</div>
+  <div class="legalnote">Esta página es una herramienta de autoservicio con fines informativos y de orientación comercial. El catálogo y el cuestionario ofrecen precios de referencia y recomendaciones automatizadas; no constituyen una cotización cerrada, una propuesta formal ni asesoría profesional en geomarketing, y su uso no genera relación contractual alguna. La propuesta, el alcance y el precio definitivos se formalizan únicamente tras una conversación directa con el Asesor en Geomarketing. Esta herramienta no guarda ni envía los datos que captures aquí.</div>
 </footer>
 
 <script>
@@ -691,7 +697,7 @@ const QUESTIONS = [
    ============================================================ */
 const grid = document.getElementById('pkgGrid');
 const filterBox = document.getElementById('filters');
-let activeCat = 'mid';
+let activeCat = 'lite';
 
 function ivaPrice(p){return `${p} <span class="iva">IVA incluido</span>`;}
 
@@ -735,7 +741,7 @@ const catalogPanel = document.getElementById('catalogPanel');
 const quizPanel = document.getElementById('quizPanel');
 
 function scrollToPanels(){window.scrollTo({top:0,behavior:'smooth'});}
-function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('mid');scrollToPanels();}
+function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('lite');scrollToPanels();}
 function openQuiz(){document.body.classList.add('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.add('active');restartQuiz();scrollToPanels();}
 function goHome(){document.body.classList.remove('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.remove('active');window.scrollTo({top:0,behavior:'smooth'});}
 
