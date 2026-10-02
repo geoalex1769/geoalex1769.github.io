@@ -87,8 +87,9 @@
   /* ---------- mode cards (the two options) ---------- */
   .modes{
     max-width:1180px;margin:-96px auto 0;padding:0 24px;position:relative;z-index:5;
-    display:grid;grid-template-columns:2fr 1fr;gap:20px;align-items:stretch;
+    display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:20px;align-items:stretch;
   }
+  @media(max-width:1000px){.modes{grid-template-columns:1fr 1fr}.mode-card.build{grid-column:1/-1}}
   @media(max-width:760px){.modes{grid-template-columns:1fr}}
   .mode-card{
     background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:14px;padding:28px 26px;
@@ -287,6 +288,162 @@
   .btn-teal:hover{background:var(--ink);color:#fff}
   .btn-teal:focus-visible,.btn-ghost:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
   @media(max-width:560px){.btn-teal{width:100%;justify-content:center}}
+
+  /* ---------- armador de paquetes ("Arma tu propio paquete") ---------- */
+  #builderPanel.active{animation:none}
+  .bld-layout{display:grid;grid-template-columns:1fr 390px;gap:24px;align-items:start}
+  .bld-left{min-width:0}
+  @media(max-width:980px){.bld-layout{grid-template-columns:1fr}#builderPanel{padding-bottom:96px}}
+
+  .bld-toolbar{display:flex;gap:10px;align-items:center;margin-bottom:16px;flex-wrap:wrap}
+  .bld-search{flex:1;min-width:210px;position:relative}
+  .bld-search input{
+    width:100%;padding:12px 14px 12px 40px;border:1px solid var(--line);border-radius:10px;
+    font-family:'Inter',sans-serif;font-size:14px;background:var(--card);color:var(--text);box-shadow:var(--shadow);
+  }
+  .bld-search input:focus{outline:none;border-color:var(--gold)}
+  .bld-search svg{position:absolute;left:13px;top:50%;transform:translateY(-50%);width:17px;height:17px;color:var(--muted)}
+  .bld-empty{text-align:center;color:var(--muted);font-size:14px;padding:30px 0}
+
+  details.bld-cat{
+    background:var(--card);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:12px;
+    margin-bottom:11px;overflow:hidden;box-shadow:var(--shadow);
+  }
+  summary.bld-cat-head{
+    list-style:none;cursor:pointer;padding:14px 16px;display:flex;align-items:center;gap:12px;background:var(--paper-2);
+  }
+  summary.bld-cat-head::-webkit-details-marker{display:none}
+  summary.bld-cat-head:hover{background:#EFE9DB}
+  .bld-cat-id{font-family:'Montserrat',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.1em;color:#fff;background:var(--ink);padding:4px 9px;border-radius:4px;flex:none;min-width:44px;text-align:center}
+  .bld-cat-title{font-family:'Marcellus',serif;font-size:18px;flex:1;min-width:0;color:var(--ink)}
+  .bld-cat-n{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.06em}
+  .bld-chev{width:16px;height:16px;color:var(--gold);transition:transform .2s;flex:none}
+  details[open] > summary .bld-chev{transform:rotate(180deg)}
+
+  .bld-mod{display:flex;align-items:center;gap:12px;padding:13px 16px;border-top:1px solid var(--line);transition:background .15s}
+  .bld-mod:hover{background:var(--paper)}
+  .bld-mod.in{background:rgba(184,145,90,.13)}
+  .bld-code{
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.08em;color:var(--ink);
+    background:var(--paper-2);border:1px solid var(--line);padding:4px 8px;border-radius:5px;flex:none;min-width:50px;text-align:center;
+  }
+  .bld-mod.in .bld-code{background:#fff;border-color:var(--gold)}
+  .bld-main-t{flex:1;min-width:0}
+  .bld-name{font-size:14px;font-weight:500;color:var(--text);line-height:1.35}
+  .bld-meta{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--muted);margin-top:2px;letter-spacing:.02em}
+  .bld-note{font-size:11.5px;color:var(--coral-d);margin-top:3px;font-style:italic}
+  .bld-add{
+    appearance:none;border:1.5px solid var(--gold);background:var(--card);color:var(--coral-d);cursor:pointer;flex:none;
+    width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-size:19px;line-height:1;transition:all .15s;
+  }
+  .bld-add:hover{background:var(--gold);color:#fff}
+  .bld-mod.in .bld-add{background:var(--ink);border-color:var(--ink);color:#fff}
+  .bld-mod.in .bld-add:hover{background:var(--coral-d);border-color:var(--coral-d)}
+  .bld-incl{font-family:'Montserrat',sans-serif;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);flex:none}
+
+  /* panel "Tu paquete" */
+  .bld-quote{position:sticky;top:84px;max-height:calc(100vh - 100px);overflow:auto;border-radius:14px}
+  .bld-card{background:var(--card);border:1px solid var(--line);border-top:3px solid var(--gold);border-radius:14px;box-shadow:var(--shadow);overflow:hidden}
+  .bld-head{background:var(--ink);color:#F4F0E7;padding:15px 16px;display:flex;align-items:center;gap:10px}
+  .bld-head h3{font-size:19px;flex:1}
+  .bld-count{font-family:'Montserrat',sans-serif;font-size:11px;letter-spacing:.06em;background:rgba(255,255,255,.14);padding:3px 10px;border-radius:20px}
+  .bld-close{display:none;appearance:none;border:none;background:rgba(255,255,255,.14);color:#fff;width:30px;height:30px;border-radius:8px;cursor:pointer;font-size:19px;place-items:center}
+  .bld-client{padding:12px 16px;border-bottom:1px solid var(--line);display:grid;grid-template-columns:1fr 1fr;gap:10px;background:var(--paper)}
+  .bld-fld{display:flex;flex-direction:column;gap:4px;min-width:0}
+  .bld-fld label{font-family:'Montserrat',sans-serif;font-size:9.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  .bld-fld input{border:1px solid var(--line);border-radius:7px;padding:8px 9px;font-family:'Inter',sans-serif;font-size:13px;background:var(--card);color:var(--text);width:100%}
+  .bld-fld input:focus{outline:none;border-color:var(--gold)}
+  .bld-emptyq{padding:34px 22px;text-align:center;color:var(--muted);font-size:13.5px;line-height:1.55}
+  .bld-emptyq svg{width:36px;height:36px;margin-bottom:10px;color:var(--gold);opacity:.8}
+
+  .bld-line{padding:12px 16px;border-bottom:1px solid var(--line)}
+  .bld-line-top{display:flex;align-items:flex-start;gap:9px}
+  .bld-lcode{font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:.06em;color:var(--coral-d);flex:none;padding-top:3px;min-width:38px}
+  .bld-lname{flex:1;font-size:13px;font-weight:500;line-height:1.35}
+  .bld-rm{appearance:none;border:none;background:transparent;color:var(--muted);cursor:pointer;font-size:17px;line-height:1;flex:none;padding:0 2px}
+  .bld-rm:hover{color:#A23B30}
+  .bld-ctrl{display:flex;align-items:center;gap:8px;margin-top:8px;padding-left:47px;flex-wrap:wrap}
+  .bld-stepper{display:flex;align-items:center;border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+  .bld-stepper button{appearance:none;border:none;background:var(--paper-2);width:28px;height:28px;cursor:pointer;font-size:15px;color:var(--ink);line-height:1}
+  .bld-stepper button:hover{background:var(--gold);color:#fff}
+  .bld-stepper input{width:56px;border:none;text-align:center;font-family:'Montserrat',sans-serif;font-size:12.5px;background:var(--card);color:var(--text);height:28px;-moz-appearance:textfield}
+  .bld-stepper input::-webkit-outer-spin-button,.bld-stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+  .bld-stepper input:focus{outline:none}
+  .bld-unit{font-family:'Montserrat',sans-serif;font-size:11px;color:var(--muted)}
+  .bld-flag{font-family:'Montserrat',sans-serif;font-size:10px;color:var(--coral-d);background:rgba(184,145,90,.16);padding:2px 7px;border-radius:5px}
+  .bld-lnote{font-size:11px;color:var(--muted);padding-left:47px;margin-top:5px;font-style:italic}
+
+  .bld-sec{padding:13px 16px;border-top:6px solid var(--paper);background:var(--paper-2)}
+  .bld-sec h4{font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .bld-sr{display:flex;align-items:center;gap:9px;margin-bottom:8px;font-size:12.5px;cursor:pointer;line-height:1.35}
+  .bld-sr input[type=checkbox]{width:16px;height:16px;accent-color:#9A7234;cursor:pointer;flex:none}
+  .bld-sr .mini{width:56px;border:1px solid var(--line);border-radius:6px;padding:4px 6px;font-family:'Montserrat',sans-serif;font-size:12px;text-align:center;background:var(--card);color:var(--text)}
+  .bld-sr .mini:focus{outline:none;border-color:var(--gold)}
+  .bld-hint{font-size:11px;color:var(--muted);line-height:1.5;font-style:italic;margin-top:4px}
+
+  .bld-advis{padding:13px 16px;border-top:1px solid var(--line)}
+  .bld-advis h4{font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .bld-adv{display:flex;gap:8px;align-items:flex-start;font-size:12px;line-height:1.45;margin-bottom:9px;color:var(--muted)}
+  .bld-adv svg{width:15px;height:15px;flex:none;margin-top:1px}
+  .bld-adv.ok{color:#2F5A44}
+  .bld-adv.ok svg{color:#3F6B52}
+  .bld-adv.info{color:var(--muted)}
+  .bld-adv.info svg{color:var(--gold)}
+  .bld-adv.warn{color:#8E2F25}
+  .bld-adv.warn svg{color:#A23B30}
+  .bld-adv .bld-act{
+    display:inline-block;margin:6px 6px 0 0;appearance:none;border:1px solid #A23B30;background:#fff;color:#8E2F25;cursor:pointer;
+    font-family:'Montserrat',sans-serif;font-weight:600;font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;padding:5px 10px;border-radius:6px;
+  }
+  .bld-adv .bld-act:hover{background:#A23B30;color:#fff}
+  .bld-adv label.bld-chk{display:flex;gap:7px;align-items:center;margin-top:6px;cursor:pointer;color:var(--text)}
+  .bld-adv label.bld-chk input{accent-color:#9A7234;width:15px;height:15px}
+
+  .bld-voltiers{padding:13px 16px;border-top:6px solid var(--paper);background:var(--paper-2)}
+  .bld-voltiers h4{font-family:'Montserrat',sans-serif;font-weight:600;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px}
+  .bld-vtl{display:grid;grid-template-columns:repeat(4,1fr);gap:6px}
+  .bld-vt{border:1px solid var(--line);border-radius:8px;padding:8px 3px 7px;text-align:center;background:var(--card);transition:all .15s}
+  .bld-vt span{display:block;font-family:'Marcellus',serif;font-size:17px;color:var(--muted);line-height:1.1}
+  .bld-vt small{font-family:'Montserrat',sans-serif;font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+  .bld-vt.passed{background:rgba(184,145,90,.16);border-color:var(--gold)}
+  .bld-vt.passed span{color:var(--coral-d)}
+  .bld-vt.on{background:var(--ink);border-color:var(--ink)}
+  .bld-vt.on span{color:#fff}
+  .bld-vt.on small{color:var(--teal-l)}
+  .bld-vmsg{margin-top:10px;font-size:12px;color:var(--muted);line-height:1.45}
+  .bld-vmsg b{color:var(--ink);font-weight:600}
+
+  .bld-actions{padding:14px 16px 6px;display:flex;gap:9px;border-top:1px solid var(--line)}
+  .bld-actions .btn-primary{flex:1.7;justify-content:center;border:none;cursor:pointer;padding:13px 12px;font-size:11.5px}
+  .bld-actions .btn-ghost{flex:1;justify-content:center;cursor:pointer;padding:13px 12px;font-size:11.5px}
+  .bld-actions button:disabled{opacity:.4;cursor:not-allowed}
+  .bld-actions .btn-primary:disabled:hover{background:var(--ink)}
+  .bld-actions .btn-ghost:disabled:hover{background:none;color:var(--ink)}
+  .bld-status{padding:4px 16px 0;font-family:'Montserrat',sans-serif;font-size:11px;color:var(--muted);line-height:1.5;text-align:center}
+  .bld-clear{text-align:center;padding:8px 16px 4px}
+  .bld-clear button{appearance:none;border:none;background:transparent;color:var(--muted);font-family:'Montserrat',sans-serif;font-size:11px;cursor:pointer;text-decoration:underline;letter-spacing:.04em}
+  .bld-clear button:hover{color:#A23B30}
+  .bld-legal{padding:8px 16px 16px;font-family:'Montserrat',sans-serif;font-size:10.5px;color:var(--muted);line-height:1.65;text-align:left}
+
+  .bld-fab{
+    display:none;position:fixed;left:14px;right:14px;bottom:14px;z-index:60;background:var(--ink);color:#F4F0E7;
+    border:1px solid var(--gold);cursor:pointer;border-radius:13px;padding:13px 16px;align-items:center;gap:12px;
+    box-shadow:0 14px 40px rgba(20,35,58,.3);font-family:'Montserrat',sans-serif;
+  }
+  .bld-fab .fl{flex:1;text-align:left;font-size:13px;font-weight:500;letter-spacing:.02em}
+  .bld-fab .fl small{display:block;font-size:10.5px;color:var(--teal-l);letter-spacing:.1em;text-transform:uppercase;margin-bottom:2px}
+  .bld-fab .fgo{background:var(--gold);color:var(--ink);padding:9px 14px;border-radius:9px;font-weight:600;font-size:11.5px;letter-spacing:.08em;text-transform:uppercase}
+  @media(max-width:980px){
+    .bld-fab{display:flex}
+    .bld-quote{
+      position:fixed;inset:0;top:0;z-index:70;max-height:none;border-radius:0;background:var(--paper);
+      transform:translateY(100%);visibility:hidden;transition:transform .28s cubic-bezier(.4,0,.2,1),visibility 0s linear .28s;
+    }
+    .bld-quote.open{transform:translateY(0);visibility:visible;transition:transform .28s cubic-bezier(.4,0,.2,1),visibility 0s}
+    .bld-card{border-radius:0;border:none;border-top:3px solid var(--gold);min-height:100%;box-shadow:none}
+    .bld-close{display:grid}
+  }
+  @media(max-width:420px){.bld-client{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
@@ -358,6 +515,15 @@
     <h2>Ver todos los paquetes</h2>
     <p>Explora el catálogo completo con alcance, precios y tiempos. Filtra por tipo de servicio y compara a tu ritmo.</p>
     <span class="go">Abrir catálogo
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </span>
+  </button>
+  <button class="mode-card build" onclick="openBuilder()">
+    <div class="num">03</div>
+    <span class="tag">Opción 3 · A tu medida</span>
+    <h2>Arma tu propio paquete</h2>
+    <p>Elige módulo por módulo lo que necesitas y envíame tu selección.</p>
+    <span class="go">Armar mi paquete
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
     </span>
   </button>
@@ -468,6 +634,68 @@
   </div>
 </section>
 
+<!-- ============ BUILDER PANEL · ARMA TU PROPIO PAQUETE ============ -->
+<section class="panel" id="builderPanel">
+  <div class="sec-head">
+    <div>
+      <h2>Arma tu propio paquete</h2>
+      <p class="sub">Elige los módulos que necesitas, ajusta las cantidades y envíame tu selección. Aquí no verás precios: preparo tu cotización a la medida, con el descuento por integración que corresponda.</p>
+    </div>
+    <button class="backbtn" onclick="goHome()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+      Volver al inicio
+    </button>
+  </div>
+
+  <div class="bld-layout">
+    <div class="bld-left">
+      <div class="bld-toolbar">
+        <div class="bld-search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>
+          <input type="text" id="bldSearch" placeholder="Busca un módulo o categoría… (ej. isócrona, competencia, scoring)" oninput="bldFilter(this.value)">
+        </div>
+        <button class="chip" type="button" onclick="bldToggleAll(true)">Expandir</button>
+        <button class="chip" type="button" onclick="bldToggleAll(false)">Colapsar</button>
+      </div>
+      <div id="bldCatalog"></div>
+      <p class="bld-empty" id="bldNoRes" style="display:none">No encontramos módulos con esa búsqueda.</p>
+    </div>
+
+    <aside class="bld-quote" id="bldQuote" aria-label="Tu paquete">
+      <div class="bld-card">
+        <div class="bld-head">
+          <h3>Tu paquete</h3>
+          <span class="bld-count" id="bldCount">0 módulos</span>
+          <button class="bld-close" type="button" onclick="bldSheet(false)" aria-label="Cerrar">×</button>
+        </div>
+        <div class="bld-client">
+          <div class="bld-fld"><label for="bldName">Tu nombre</label><input id="bldName" placeholder="Nombre" autocomplete="name"></div>
+          <div class="bld-fld"><label for="bldProj">Negocio o proyecto</label><input id="bldProj" placeholder="Ej. cafetería, clínica, tienda"></div>
+        </div>
+        <div id="bldLines"></div>
+        <div id="bldCond"></div>
+        <div id="bldAdv"></div>
+        <div id="bldVol"></div>
+        <div class="bld-actions">
+          <button class="btn-primary" id="bldSend" type="button" onclick="bldSend()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.5 15.3L2 22l4.8-1.4A10 10 0 1 0 12 2zm0 18a8 8 0 0 1-4-1.1l-.3-.2-2.8.8.8-2.7-.2-.3A8 8 0 1 1 12 20zm4.4-5.9c-.2-.1-1.4-.7-1.6-.8s-.4-.1-.5.1-.6.8-.8 1-.3.2-.5 0a6.6 6.6 0 0 1-1.9-1.2 7.3 7.3 0 0 1-1.4-1.7c-.1-.2 0-.4.1-.5l.4-.4.2-.4v-.4l-.8-1.9c-.2-.5-.4-.4-.5-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.8 11.8 0 0 0 4.6 4c.6.3 1.1.5 1.5.6a3.5 3.5 0 0 0 1.6.1c.5-.1 1.4-.6 1.6-1.1a2 2 0 0 0 .1-1.1c0-.1-.2-.2-.4-.3z"/></svg>
+            Enviar por WhatsApp
+          </button>
+          <button class="btn-ghost" id="bldCopy" type="button" onclick="bldCopy()">Copiar</button>
+        </div>
+        <p class="bld-status" id="bldStatus"></p>
+        <div class="bld-clear"><button type="button" onclick="bldClear()">Vaciar mi paquete</button></div>
+        <p class="bld-legal">Tu selección es una solicitud orientativa: no constituye una cotización cerrada ni genera relación contractual. El alcance y el precio definitivos se acuerdan en una conversación directa con el Asesor en Geomarketing. Esta herramienta corre en tu navegador y solo comparte tu selección si tú presionas el botón de WhatsApp.</p>
+      </div>
+    </aside>
+  </div>
+
+  <button class="bld-fab" id="bldFab" type="button" onclick="bldSheet(true)">
+    <div class="fl"><small>Tu paquete</small><span id="bldFabCount">0 módulos</span></div>
+    <div class="fgo">Ver mi paquete</div>
+  </button>
+</section>
+
 <!-- ============ FOOTER ============ -->
 <footer>
   <div class="foot">
@@ -476,16 +704,9 @@
       <p class="slogan">Consultoría de geomarketing<br>y marketing estratégico</p>
       <p class="note mono" style="margin-top:14px">Decide con datos dónde abrir, dónde crecer y dónde optimizar.</p>
     </div>
-    <div class="foot-contact">
-      <span class="lbl">Portafolio</span>
-      <a href="https://drive.google.com/drive/folders/1HyTOKaWRV_rXBOd-k6cSe_5wKYSVjj1R?usp=sharing" target="_blank" rel="noopener">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7a2 2 0 0 1 2-2h4l2 2h8a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
-        Ver casos en Google Drive
-      </a>
-    </div>
   </div>
   <div class="ivanote">Todos los precios están expresados en pesos mexicanos (MXN) antes de IVA · Al facturar se agrega el IVA correspondiente (16% general · 8% región fronteriza)</div>
-  <div class="legalnote">Esta página es una herramienta de autoservicio con fines informativos y de orientación comercial. El catálogo y el cuestionario ofrecen precios de referencia y recomendaciones automatizadas; no constituyen una cotización cerrada, una propuesta formal ni asesoría profesional en geomarketing, y su uso no genera relación contractual alguna. La propuesta, el alcance y el precio definitivos se formalizan únicamente tras una conversación directa con el Asesor en Geomarketing. Esta herramienta no guarda ni envía los datos que captures aquí.</div>
+  <div class="legalnote">Esta página es una herramienta de autoservicio con fines informativos y de orientación comercial. El catálogo, el cuestionario y el armador de paquetes ofrecen precios de referencia o recomendaciones automatizadas; no constituyen una cotización cerrada, una propuesta formal ni asesoría profesional en geomarketing, y su uso no genera relación contractual alguna. La propuesta, el alcance y el precio definitivos se formalizan únicamente tras una conversación directa con el Asesor en Geomarketing. Esta herramienta no guarda ni envía los datos que captures aquí, salvo que tú decidas compartir tu selección por WhatsApp.</div>
 </footer>
 
 <script>
@@ -817,11 +1038,13 @@ function waHref(p){
    ============================================================ */
 const catalogPanel = document.getElementById('catalogPanel');
 const quizPanel = document.getElementById('quizPanel');
+const builderPanel = document.getElementById('builderPanel');
 
 function scrollToPanels(){window.scrollTo({top:0,behavior:'smooth'});}
-function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');catalogPanel.classList.add('active');setCat('lite');scrollToPanels();}
-function openQuiz(){document.body.classList.add('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.add('active');restartQuiz();scrollToPanels();}
-function goHome(){document.body.classList.remove('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.remove('active');window.scrollTo({top:0,behavior:'smooth'});}
+function openCatalog(){document.body.classList.add('panel-open');quizPanel.classList.remove('active');builderPanel.classList.remove('active');bldSheet(false);catalogPanel.classList.add('active');setCat('lite');scrollToPanels();}
+function openQuiz(){document.body.classList.add('panel-open');catalogPanel.classList.remove('active');builderPanel.classList.remove('active');bldSheet(false);quizPanel.classList.add('active');restartQuiz();scrollToPanels();}
+function openBuilder(){document.body.classList.add('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.remove('active');builderPanel.classList.add('active');scrollToPanels();}
+function goHome(){document.body.classList.remove('panel-open');catalogPanel.classList.remove('active');quizPanel.classList.remove('active');builderPanel.classList.remove('active');bldSheet(false);window.scrollTo({top:0,behavior:'smooth'});}
 
 /* ============================================================
    LÓGICA del cuestionario
@@ -959,6 +1182,609 @@ function restartQuiz(){
 }
 
 /* ============================================================
+   ARMA TU PROPIO PAQUETE
+   Mismas reglas de construcción del catálogo modular (C.1 combinación,
+   C.2 descuento por volumen, C.3 piso y techo del escalón L, mínimos por
+   servicio y fórmulas por cantidad). No muestra precios en pantalla:
+   los importes solo se usan en segundo plano para validar las reglas.
+   ============================================================ */
+const BLD_CATS = [
+  {id:'B.1', t:'Diagnóstico y arranque', mods:[
+    {c:'D01', n:'Reunión de descubrimiento + brief', p:1700},
+    {c:'D02', n:'Diagnóstico estratégico ejecutivo (C-level)', p:5700},
+    {c:'D03', n:'Definición de objetivos, KPIs y criterios', p:3000},
+    {c:'D04', n:'Plan de trabajo y cronograma personalizado', p:1900},
+    {c:'D05', n:'Alineación con stakeholders internos', p:3700},
+  ]},
+  {id:'B.2', t:'Datos e insumos', mods:[
+    {c:'DA01', n:'Extracción y procesamiento INEGI (Censo, SCINCE)', p:2400, u:'zona'},
+    {c:'DA02', n:'Extracción DENUE de competencia', p:1700, u:'zona'},
+    {c:'DA03', n:'Validación en campo de DENUE (visita)', p:2700, u:'zona/día'},
+    {c:'DA04', n:'Compra y procesamiento Mexico GIS Data (manzana)', p:5700, note:'El costo del dato se cotiza aparte'},
+    {c:'DA05', n:'Adquisición de datos de movilidad (mobility data)', p:16700, note:'El costo del dato se cotiza aparte'},
+    {c:'DA06', n:'Recolección de datos catastrales municipales', p:4400, u:'municipio'},
+    {c:'DA07', n:'Scraping de Google Maps / Foursquare', p:3000},
+    {c:'DA08', n:'Datos de vialidad y tráfico (HERE / Mapbox)', p:5000, note:'El costo del dato se cotiza aparte'},
+    {c:'DA09', n:'Recolección de planes de desarrollo urbano', p:3700, u:'municipio'},
+    {c:'DA10', n:'Datos socioeconómicos AMAI Regla 8x7', p:3000, u:'zona'},
+  ]},
+  {id:'B.3', t:'Análisis sociodemográfico', mods:[
+    {c:'SD01', n:'Perfil sociodemográfico básico (radio 1 km)', p:3700, u:'zona'},
+    {c:'SD02', n:'Perfil sociodemográfico extendido (multi-radio)', p:6400, u:'zona'},
+    {c:'SD03', n:'Análisis NSE AMAI por AGEB', p:5000, u:'zona'},
+    {c:'SD04', n:'Microsegmentación por manzana', p:9400, u:'zona'},
+    {c:'SD05', n:'Pirámide poblacional y proyección 5 años', p:3000, u:'zona'},
+    {c:'SD06', n:'Análisis de hogares y dinámica familiar', p:3700, u:'zona'},
+    {c:'SD07', n:'Análisis de escolaridad y empleo', p:3000, u:'zona'},
+    {c:'SD08', n:'Análisis de motorización y movilidad', p:3700, u:'zona'},
+    {c:'SD09', n:'Análisis de gasto y consumo (ENIGH)', p:5700, u:'zona'},
+  ]},
+  {id:'B.4', t:'Análisis de competencia', mods:[
+    {c:'CO01', n:'Mapeo básico de competencia directa', p:3000, u:'zona'},
+    {c:'CO02', n:'Mapeo extendido (directa + indirecta)', p:5000, u:'zona'},
+    {c:'CO03', n:'Mapeo de competencia regional/nacional', p:12000},
+    {c:'CO04', n:'Análisis de densidad y mapa de calor', p:3000, u:'zona'},
+    {c:'CO05', n:'Identificación de gaps y zonas blancas', p:4400, u:'zona'},
+    {c:'CO06', n:'Mix y posicionamiento de competidores', p:6400, u:'zona'},
+    {c:'CO07', n:'Benchmarking de 3 competidores top', p:9400},
+    {c:'CO08', n:'Aperturas y cierres últimos 24 meses', p:7400, u:'zona'},
+    {c:'CO09', n:'Web scraping de reseñas y sentiment por punto', p:8000, u:'zona'},
+  ]},
+  {id:'B.5', t:'Áreas de influencia y flujos', mods:[
+    {c:'AI01', n:'Isócrona simple (5/10 min, 1 modo)', p:2400, u:'punto'},
+    {c:'AI02', n:'Isócronas multimodales (auto/pie/transporte)', p:3000, u:'punto'},
+    {c:'AI03', n:'Isócronas avanzadas con horario pico/valle', p:4400, u:'punto'},
+    {c:'AI04', n:'Áreas de influencia ponderadas (gravitacional)', p:9400},
+    {c:'AI05', n:'Aforo peatonal manual en campo', p:2700, u:'punto/día'},
+    {c:'AI06', n:'Aforo vehicular manual en campo', p:3000, u:'punto/día'},
+    {c:'AI07', n:'Aforo automatizado con sensores/cámaras', p:8000, u:'punto/sem'},
+    {c:'AI08', n:'Análisis de mobility data (origen-destino)', p:23400, u:'zona'},
+    {c:'AI09', n:'Dwell time analysis (location intelligence)', p:18700, u:'zona'},
+  ]},
+  {id:'B.6', t:'Red y canibalización', mods:[
+    {c:'RD01', n:'Diagnóstico básico de red existente', f:'rd01', u:'puntos', q0:10, note:'Incluye 10 puntos · cada punto adicional amplía el alcance'},
+    {c:'RD02', n:'Canibalización entre puntos propios (hasta 10)', p:8000, note:'Requiere mínimo 2 puntos del cliente'},
+    {c:'RD03', n:'Canibalización con red de competencia', p:12000},
+    {c:'RD04', n:'Modelo de simulación de apertura nueva', p:16000},
+    {c:'RD05', n:'Análisis de salud por sucursal (scoring)', p:1200, u:'sucursal', min:12000},
+    {c:'RD06', n:'Identificación de candidatas a cierre/reubicación', p:14700},
+    {c:'RD07', n:'Modelo gravitacional Huff', p:32000},
+    {c:'RD08', n:'Modelo Multiplicative Competitive Interaction (MCI)', p:43400},
+  ]},
+  {id:'B.7', t:'Scoring y modelos predictivos', mods:[
+    {c:'SC01', n:'Matriz de scoring multi-criterio (3 sitios)', p:8000},
+    {c:'SC02', n:'Matriz de scoring multi-criterio (4–10 sitios)', p:16000},
+    {c:'SC03', n:'Matriz de scoring extensa (10+ sitios)', p:32000},
+    {c:'SC04', n:'Modelo predictivo regresión multivariada', p:43400, note:'Requiere BD histórica de ventas'},
+    {c:'SC05', n:'Modelo ML (XGBoost / Random Forest)', p:80000, note:'Requiere BD histórica de ventas'},
+    {c:'SC06', n:'Geo-Index propietario sectorial (calibración)', p:120000},
+    {c:'SC07', n:'Modelo de demanda potencial', p:56700},
+    {c:'SC08', n:'Modelo de elasticidad-distancia', p:36700},
+  ]},
+  {id:'B.8', t:'Geocodificación y base de datos', mods:[
+    {c:'GC01', n:'Geocodificación masiva (volumen pequeño)', u:'registro', rec:[0.55,2], rate:1, min:5400, q0:3000},
+    {c:'GC02', n:'Geocodificación masiva (volumen grande, +10K)', u:'registro', rec:[0.35,1], rate:0.7, q0:10000},
+    {c:'GC03', n:'Limpieza y normalización de direcciones', u:'registro', rec:[0.2,0.55], rate:0.35, min:3400, q0:5000},
+    {c:'GC04', n:'Enriquecimiento con NSE/AGEB/sociodemo', u:'registro', rec:[0.55,1.7], rate:1, min:5400, q0:3000},
+    {c:'GC05', n:'Patrones espaciales / clustering (hasta 5K)', p:12000},
+    {c:'GC06', n:"Hotspot analysis (Getis-Ord, Moran's I)", p:9400},
+    {c:'GC07', n:'Segmentación geo-demográfica de cartera', p:21400},
+  ]},
+  {id:'B.9', t:'Entregables visuales', mods:[
+    {c:'EV01', n:'Mapa temático estático (PDF/PNG)', p:1700, u:'mapa'},
+    {c:'EV02', n:'Mapa temático premium (diseño avanzado)', p:3700, u:'mapa'},
+    {c:'EV03', n:'Set de 5 mapas temáticos coordinados', p:7400},
+    {c:'EV04', n:'Reporte ejecutivo 10–15 pp', p:3000},
+    {c:'EV05', n:'Reporte ejecutivo extenso 25–40 pp', p:6400},
+    {c:'EV06', n:'Reporte estratégico 40–60 pp + anexos', p:12000},
+    {c:'EV07', n:'Presentación ejecutiva PowerPoint/Keynote', p:3700},
+    {c:'EV08', n:'Story map / reporte interactivo web', p:9400},
+    {c:'EV09', n:'Infografía territorial', p:3000, u:'infografía'},
+  ]},
+  {id:'B.10', t:'Dashboards y herramientas', mods:[
+    {c:'DB01', n:'Dashboard básico Looker Studio', p:6400},
+    {c:'DB02', n:'Dashboard intermedio Power BI', p:12000},
+    {c:'DB03', n:'Dashboard premium Power BI con DAX avanzado', p:21400},
+    {c:'DB04', n:'Dashboard CARTO / Mapbox interactivo', p:25400},
+    {c:'DB05', n:'Dashboard custom (Leaflet/D3)', p:43400, note:'Alcance a la medida · puede escalar'},
+    {c:'DB06', n:'Mantenimiento mensual de dashboard', p:3000, u:'mes'},
+    {c:'DB07', n:'Actualización trimestral de datos', p:3700, u:'trim'},
+    {c:'DB08', n:'Capacitación de uso del dashboard', p:3000, u:'sesión'},
+  ]},
+  {id:'B.11', t:'Presentación y comunicación', mods:[
+    {c:'PR01', n:'Presentación a equipo operativo (1h)', p:2400},
+    {c:'PR02', n:'Presentación a comité directivo (90 min)', p:5700},
+    {c:'PR03', n:'Presentación a junta directiva', p:9400},
+    {c:'PR04', n:'Workshop ejecutivo medio día', p:12000},
+    {c:'PR05', n:'Workshop ejecutivo día completo', p:21400},
+    {c:'PR06', n:'Sesión Q&A post-entrega (60 min)', p:1700, u:'sesión'},
+  ]},
+  {id:'B.12', t:'Soporte postventa', mods:[
+    {c:'SP01', n:'Soporte 15 días por correo', p:0, inc:true},
+    {c:'SP02', n:'Soporte 30 días por correo + 1 llamada', p:1900},
+    {c:'SP03', n:'Soporte 60 días + 2 llamadas', p:3700},
+    {c:'SP04', n:'Soporte 90 días + acceso WhatsApp', p:6400},
+    {c:'SP05', n:'Mantenimiento mensual on-demand (8h)', p:3700, u:'mes'},
+    {c:'SP06', n:'Acompañamiento en implementación (3 meses)', p:16000},
+  ]},
+  {id:'B.13', t:'Sectores especializados (premium)', mods:[
+    {c:'SE01', n:'Highest & best use inmobiliario', p:23400, u:'sitio'},
+    {c:'SE02', n:'Análisis de plusvalía proyectada', p:18700, u:'zona'},
+    {c:'SE03', n:'Estudio de absorción inmobiliaria', p:30000},
+    {c:'SE04', n:'Análisis territorial electoral', p:36700, u:'distrito'},
+    {c:'SE05', n:'Análisis epidemiológico territorial (salud)', p:32000},
+    {c:'SE06', n:'Análisis de inclusión financiera', p:28000},
+    {c:'SE07', n:'Geo-scoring de riesgo crediticio', p:56700},
+    {c:'SE08', n:'Análisis ESG territorial', p:43400},
+    {c:'SE09', n:'Análisis de riesgo de seguridad pública', p:25400, u:'zona'},
+    {c:'SE10', n:'Análisis hídrico para industrial', p:36700},
+    {c:'SE11', n:'Análisis de logística de última milla', p:50000},
+    {c:'SE12', n:'Cobertura de servicios públicos', p:32000},
+    {c:'SE13', n:'Déficit de equipamiento urbano', p:34700, u:'municipio'},
+    {c:'SE14', n:'Localización óptima de equipamiento público', p:30000, u:'equip.'},
+    {c:'SE15', n:'Diagnóstico para planeación y ordenamiento urbano', p:56700},
+  ]},
+  {id:'B.14', t:'Nearshoring / industrial', mods:[
+    {c:'NI01', n:'Análisis macro-localización (50–100 candidatos)', p:56700},
+    {c:'NI02', n:'Análisis de incentivos fiscales por estado', p:23400},
+    {c:'NI03', n:'Análisis de mano de obra disponible', p:18700, u:'estado'},
+    {c:'NI04', n:'Análisis logístico de cadena de suministro', p:36700},
+    {c:'NI05', n:'Evaluación de infraestructura energética', p:28000, u:'sitio'},
+    {c:'NI06', n:'Análisis de disponibilidad de agua', p:23400, u:'sitio'},
+    {c:'NI07', n:'Negociación con autoridades estatales', p:16700, u:'sesión'},
+  ]},
+  {id:'B.15', t:'IA y avanzado', mods:[
+    {c:'IA01', n:'Análisis de sentiment con LLM por geografía', p:21400, u:'zona'},
+    {c:'IA02', n:'Modelo de predicción de ventas con ML', p:80000},
+    {c:'IA03', n:'Detección de patrones espaciales con AI', p:32000},
+    {c:'IA04', n:'Generación automatizada de reportes con IA', f:'ia04', u:'reportes', q0:0, note:'Incluye configuración inicial + generación por reporte'},
+    {c:'IA05', n:'Computer vision en imágenes satelitales', p:56700},
+  ]},
+  {id:'B.16', t:'Capacitación', mods:[
+    {c:'CP01', n:'Capacitación QGIS básico (8h, ≤10 pers.)', p:12000},
+    {c:'CP02', n:'Capacitación QGIS intermedio (16h)', p:23400},
+    {c:'CP03', n:'Capacitación QGIS avanzado (24h)', p:36700},
+    {c:'CP04', n:'Curso de geomarketing aplicado (24h)', p:43400},
+    {c:'CP05', n:'Programa diplomado in-company (32h)', p:186700},
+    {c:'CP06', n:'Capacitación ejecutiva al C-level (4h)', p:16700},
+    {c:'CP07', n:'Material y manual personalizado', p:9400},
+  ]},
+  {id:'B.18', t:'Omnicanal y digital', mods:[
+    {c:'OM01', n:'Geoloc. y mapa de calor de ventas e-commerce', p:6400},
+    {c:'OM02', n:'Cobertura de última milla (por zona metro)', p:12000, u:'zona metro'},
+    {c:'OM03', n:'Catchment areas para pick-up / BOPIS', p:8000},
+    {c:'OM04', n:'Gap analysis: demanda digital vs. presencia física', p:10700},
+    {c:'OM05', n:'Canibalización omnicanal (online vs. tienda)', p:9400},
+    {c:'OM06', n:'Localización óptima de dark stores', p:23400},
+    {c:'OM07', n:'Modelo de red de lockers / puntos de entrega', p:18700},
+  ]},
+  {id:'B.19', t:'Franquicias', mods:[
+    {c:'FR01', n:'Diseño de zonas de exclusividad territorial', p:14700, u:'región/metro'},
+    {c:'FR02', n:'Validación de territorio para franquiciado', p:6400, u:'territorio'},
+    {c:'FR03', n:'Detección de solapamiento / conflicto', p:9400},
+    {c:'FR04', n:'Dossier de territorio para venta de franquicia', p:4400, u:'dossier'},
+    {c:'FR05', n:'Modelo de capacidad de mercado', p:12000},
+    {c:'FR06', n:'Auditoría de red de franquicias (hasta 15)', p:10700},
+    {c:'FR07', n:'Mapa maestro de expansión de franquicias', p:14700},
+  ]},
+  {id:'B.20', t:'Turismo y hospitalidad', mods:[
+    {c:'TU01', n:'Flujos turísticos y estacionalidad', p:25400, u:'destino'},
+    {c:'TU02', n:'Perfil de demanda flotante vs. residente', p:18700, u:'zona'},
+    {c:'TU03', n:'Site selection hotelero', p:28000, u:'sitio'},
+    {c:'TU04', n:'Renta corta (Airbnb) como competencia', p:21400, u:'zona'},
+    {c:'TU05', n:'Viabilidad para desarrollo turístico (resort)', p:80000},
+  ]},
+  {id:'B.22', t:'Módulos LITE (escalón L)', mods:[
+    {c:'D-L1',  n:'Cuestionario de diagnóstico guiado (sin llamada)', p:800, note:'Versión ligera de D01'},
+    {c:'D-L2',  n:'Llamada de encuadre 20 min + resumen escrito', p:1200, note:'Versión ligera de D01'},
+    {c:'SD-L1', n:'Perfil sociodemográfico exprés (6 indicadores clave)', p:2600, u:'zona', note:'Versión ligera de SD01'},
+    {c:'EV-L1', n:'Mini-reporte de hallazgos 3–5 pp (incluye 1 mapa)', p:2000, note:'Versión ligera de EV04 + EV01'},
+    {c:'EV-L2', n:'Reporte ligero 6–8 pp (incluye 2 mapas)', p:3300, note:'Versión ligera de EV04 + EV01'},
+    {c:'GC-L1', n:'Geocodificación + enriquecimiento mini (≤300 registros)', p:5000, note:'Versión ligera de GC01 + GC04'},
+    {c:'GC-L2', n:'Mapa de calor de cartera mini (≤300 clientes, con geocod.)', p:5700, note:'Versión ligera de GC05'},
+    {c:'RD-L1', n:'Diagnóstico exprés de ruta o territorio (1 vendedor/zona)', p:4700, note:'Versión ligera de RD01'},
+    {c:'RD-L2', n:'Scoring exprés de 1 sucursal (semáforo simple)', p:3700, u:'sucursal', note:'Versión ligera de RD05'},
+    {c:'CO-L1', n:'Sentiment snapshot (≤2 competidores, ~100 reseñas)', p:4000, note:'Versión ligera de CO09'},
+    {c:'TU-L1', n:'Flujo turístico mini (1 punto, datos secundarios)', p:4400, u:'punto', note:'Versión ligera de TU01'},
+    {c:'SE-L1', n:'Plusvalía exprés (1 zona, sin proyección a 5 años)', p:4400, u:'zona', note:'Versión ligera de SE02'},
+  ]},
+];
+
+const BLD_LITE       = ['D-L1','D-L2','SD-L1','EV-L1','EV-L2','GC-L1','GC-L2','RD-L1','RD-L2','CO-L1','TU-L1','SE-L1'];
+const BLD_LITE_DIAG  = ['D-L1','D-L2'];
+const BLD_LITE_DELIV = ['EV-L1','EV-L2'];
+const BLD_PRED       = ['SC04','SC05','SC06','SC07','SC08'];
+const BLD_L_FLOOR    = 5400;   // piso de proyecto
+const BLD_L_CEIL     = 9400;   // techo del escalón L
+const BLD_PHONE      = '523313035476';
+const BLD_SURCH = [
+  {c:'CR01', n:'NDA estricto y manejo confidencial', pct:10},
+  {c:'CR05', n:'Entrega bilingüe (español e inglés)', pct:15},
+  {c:'CR04', n:'Trabajo en fines de semana o fuera de horario', pct:30},
+  {c:'CR02', n:'Urgencia: entrega en la mitad del tiempo', pct:25, grp:'urg'},
+  {c:'CR03', n:'Urgencia extrema (7 días o menos)', pct:50, grp:'urg'},
+];
+
+const bldMod = {};
+BLD_CATS.forEach(cat=>cat.mods.forEach(m=>{ bldMod[m.c]=m; }));
+let bld = [];                 // módulos elegidos
+let bldCond = {};             // condiciones del proyecto
+BLD_SURCH.forEach(s=>{ bldCond[s.c]=false; });
+let bldHasHistory = false;    // el cliente ya cuenta con base histórica de ventas
+
+/* ---------- cálculo interno (nunca se muestra) ---------- */
+function bldLineTotal(it){
+  if(it.kind==='formula'){
+    const q = Math.max(0,it.qty);
+    if(it.c==='RD01') return 9400 + Math.max(0,q-10)*600;
+    if(it.c==='IA04') return 43400 + q*1000;
+  }
+  if(it.kind==='record'){
+    const t = it.rate*Math.max(0,it.qty);
+    return (it.min && t<it.min) ? it.min : t;
+  }
+  if(it.unit){
+    const t = it.p*Math.max(1,it.qty);
+    return (it.min && t<it.min) ? it.min : t;
+  }
+  return it.p;
+}
+function bldHitsMin(it){
+  if(!it.min) return false;
+  if(it.kind==='record') return it.rate*Math.max(0,it.qty) < it.min;
+  if(it.unit) return it.p*Math.max(1,it.qty) < it.min;
+  return false;
+}
+function bldFloor(it){
+  if(it.c==='IA04') return 0;
+  if(it.kind==='record') return 1;
+  return it.unit ? 1 : 0;
+}
+function bldVolDisc(n){ return n>=11 ? .15 : n>=8 ? .12 : n>=5 ? .10 : n>=3 ? .05 : 0; }
+function bldCompute(){
+  let sub = 0;
+  bld.forEach(it=>{ sub += bldLineTotal(it); });
+  const n = bld.length;
+  const base = sub*(1-bldVolDisc(n));
+  let sPct = 0;
+  BLD_SURCH.forEach(s=>{ if(bldCond[s.c]) sPct += s.pct; });
+  let total = base + base*sPct/100;
+  // Regla C.3: el descuento nunca empuja el total bajo el piso de proyecto
+  const gross = sub + sub*sPct/100;
+  if(gross >= BLD_L_FLOOR && total < BLD_L_FLOOR) total = BLD_L_FLOOR;
+  return {n, total};
+}
+
+/* ---------- catálogo ---------- */
+function bldMeta(m){
+  if(m.f==='rd01') return 'incluye 10 puntos · se amplía por punto adicional';
+  if(m.f==='ia04') return 'configuración inicial + generación por reporte';
+  if(m.inc)        return 'incluido en todo proyecto';
+  if(m.u)          return 'por '+m.u;
+  return 'alcance fijo';
+}
+function bldUnitLabel(it){
+  if(it.fcode==='ia04') return 'reportes';
+  if(it.fcode==='rd01') return 'puntos';
+  if(it.kind==='record') return 'registros';
+  return it.unit;
+}
+/* Abreviación de categoría: letras del código + "0" (ej. D0, RD0, EV0). En LITE los códigos llevan sufijo -L. */
+function bldCatAbbr(cat){
+  const pre = cat.mods.map(m=>(m.c.match(/^[A-Z]+/)||[''])[0]);
+  const same = pre.every(p=>p===pre[0]);
+  return same ? pre[0]+'0' : '-L';
+}
+function bldBuildCatalog(){
+  const wrap = document.getElementById('bldCatalog');
+  wrap.innerHTML = BLD_CATS.map((cat,i)=>{
+    const rows = cat.mods.map(m=>{
+      const note = m.note ? `<div class="bld-note">${m.note}</div>` : '';
+      const btn = m.inc
+        ? `<span class="bld-incl">Incluido</span>`
+        : `<button class="bld-add" type="button" onclick="bldToggle('${m.c}')" title="Agregar a mi paquete" aria-label="Agregar ${m.c}">+</button>`;
+      const hay = (m.c+' '+m.n+' '+cat.t).toLowerCase().replace(/"/g,'&quot;');
+      return `<div class="bld-mod" data-c="${m.c}" data-search="${hay}">
+        <span class="bld-code">${m.c}</span>
+        <div class="bld-main-t"><div class="bld-name">${m.n}</div><div class="bld-meta">${bldMeta(m)}</div>${note}</div>
+        ${btn}
+      </div>`;
+    }).join('');
+    return `<details class="bld-cat">
+      <summary class="bld-cat-head">
+        <span class="bld-cat-id">${bldCatAbbr(cat)}</span>
+        <span class="bld-cat-title">${cat.t}</span>
+        <span class="bld-cat-n">${cat.mods.length}</span>
+        <svg class="bld-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m6 9 6 6 6-6"/></svg>
+      </summary>
+      ${rows}
+    </details>`;
+  }).join('');
+}
+function bldFilter(q){
+  q = q.trim().toLowerCase();
+  let any = false;
+  document.querySelectorAll('#bldCatalog details.bld-cat').forEach(cat=>{
+    let visible = 0;
+    cat.querySelectorAll('.bld-mod').forEach(m=>{
+      const ok = !q || m.dataset.search.includes(q);
+      m.style.display = ok ? '' : 'none';
+      if(ok) visible++;
+    });
+    cat.style.display = visible ? '' : 'none';
+    if(q && visible) cat.open = true;
+    if(visible) any = true;
+  });
+  document.getElementById('bldNoRes').style.display = any ? 'none' : 'block';
+}
+function bldToggleAll(open){ document.querySelectorAll('#bldCatalog details.bld-cat').forEach(d=>{ d.open = open; }); }
+
+/* ---------- agregar y quitar ---------- */
+function bldAdd(c){
+  const m = bldMod[c];
+  if(!m || m.inc || bld.some(q=>q.c===c)) return;
+  const kind = m.f ? 'formula' : (m.rec ? 'record' : (m.u ? 'unit' : 'fixed'));
+  bld.push({c, name:m.n, p:m.p, unit:m.u, min:m.min, rec:m.rec, kind, fcode:m.f,
+    qty:(m.q0!=null ? m.q0 : 1), rate:m.rate||0, note:m.note});
+}
+function bldToggle(c){
+  const i = bld.findIndex(q=>q.c===c);
+  if(i>=0) bld.splice(i,1); else bldAdd(c);
+  bldRefresh();
+}
+function bldAddMany(codes){ codes.forEach(bldAdd); bldRefresh(); }
+function bldRemove(c){ const i = bld.findIndex(q=>q.c===c); if(i>=0) bld.splice(i,1); bldRefresh(); }
+function bldClear(){
+  if(bld.length && !confirm('¿Vaciar tu paquete?')) return;
+  bld = []; bldHasHistory = false;
+  BLD_SURCH.forEach(s=>{ bldCond[s.c] = false; });
+  bldRefresh();
+}
+function bldSetQty(c,v){
+  const it = bld.find(q=>q.c===c); if(!it) return;
+  it.qty = Math.max(bldFloor(it), parseInt(v)||0);
+  const flag = document.getElementById('bldflag-'+c);
+  if(flag) flag.style.display = bldHitsMin(it) ? 'inline-block' : 'none';
+  bldRenderSide();
+}
+function bldStep(c,d){
+  const it = bld.find(q=>q.c===c); if(!it) return;
+  it.qty = Math.max(bldFloor(it), (it.qty||0)+d);
+  bldRenderLines();
+  bldRenderSide();
+}
+
+/* ---------- condiciones del proyecto ---------- */
+function bldSetCond(c,on){
+  bldCond[c] = on;
+  const s = BLD_SURCH.find(x=>x.c===c);
+  if(on && s && s.grp) BLD_SURCH.forEach(o=>{ if(o.grp===s.grp && o.c!==c) bldCond[o.c] = false; });
+  bldRenderCond();
+  bldRenderSide();
+}
+function bldSetHistory(on){ bldHasHistory = on; bldRenderSide(); }
+
+/* ---------- render: líneas ---------- */
+function bldRenderLines(){
+  const el = document.getElementById('bldLines');
+  if(!bld.length){
+    el.innerHTML = `<div class="bld-emptyq">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 21s-6-5.2-6-10a6 6 0 0 1 12 0c0 4.8-6 10-6 10z"/><circle cx="12" cy="11" r="2"/></svg>
+      <p>Elige módulos del catálogo para empezar a armar tu paquete.</p></div>`;
+    return;
+  }
+  el.innerHTML = bld.map(it=>{
+    let ctrl = '';
+    if(it.kind==='formula' || it.kind==='record' || it.unit){
+      const step = it.kind==='record' ? 1000 : 1;
+      ctrl = `<div class="bld-ctrl">
+        <div class="bld-stepper">
+          <button type="button" onclick="bldStep('${it.c}',${-step})" aria-label="Menos">−</button>
+          <input type="number" inputmode="numeric" min="${bldFloor(it)}" value="${it.qty}" oninput="bldSetQty('${it.c}',this.value)" aria-label="Cantidad">
+          <button type="button" onclick="bldStep('${it.c}',${step})" aria-label="Más">+</button>
+        </div>
+        <span class="bld-unit">${bldUnitLabel(it)}</span>
+        <span class="bld-flag" id="bldflag-${it.c}" style="display:${bldHitsMin(it)?'inline-block':'none'}">aplica mínimo de servicio</span>
+      </div>`;
+    }
+    const note = it.note ? `<div class="bld-lnote">${it.note}</div>` : '';
+    return `<div class="bld-line">
+      <div class="bld-line-top">
+        <span class="bld-lcode">${it.c}</span>
+        <div class="bld-lname">${it.name}</div>
+        <button class="bld-rm" type="button" onclick="bldRemove('${it.c}')" title="Quitar" aria-label="Quitar ${it.c}">×</button>
+      </div>
+      ${ctrl}${note}
+    </div>`;
+  }).join('');
+}
+
+/* ---------- render: condiciones ---------- */
+function bldRenderCond(){
+  const el = document.getElementById('bldCond');
+  if(!bld.length){ el.innerHTML = ''; return; }
+  el.innerHTML = `<div class="bld-sec">
+    <h4>Condiciones del proyecto</h4>
+    ${BLD_SURCH.map(s=>`<label class="bld-sr"><input type="checkbox" ${bldCond[s.c]?'checked':''} onchange="bldSetCond('${s.c}',this.checked)"><span>${s.n}</span></label>`).join('')}
+    <p class="bld-hint">Algunas condiciones ajustan el alcance o la tarifa. Las confirmo contigo en la cotización.</p>
+  </div>`;
+}
+
+/* ---------- reglas de combinación (C.1 · C.3) ---------- */
+function bldChecks(){
+  const out = [];
+  if(!bld.length) return out;
+  const codes = bld.map(q=>q.c);
+  const has = c => codes.includes(c);
+  const hasAny = a => a.some(c=>codes.includes(c));
+  const lite = hasAny(BLD_LITE);
+  const total = bldCompute().total;
+
+  // Andamiaje: descubrimiento + objetivos (en el escalón L, D-L1 o D-L2)
+  if(lite){
+    out.push(hasAny(BLD_LITE_DIAG)
+      ? {level:'ok', t:'Arranque cubierto: el cuestionario guiado o la llamada de encuadre sustituye al descubrimiento y a la definición de objetivos.'}
+      : {level:'warn', t:'En el escalón L, el arranque lo cubre un cuestionario de diagnóstico guiado (D-L1) o una llamada de encuadre (D-L2).', add:['D-L1']});
+  } else {
+    const falta = ['D01','D03'].filter(c=>!has(c));
+    out.push(falta.length===0
+      ? {level:'ok', t:'Arranque cubierto: incluye descubrimiento (D01) y objetivos (D03).'}
+      : {level:'warn', t:'Todo proyecto arranca con el descubrimiento (D01) y la definición de objetivos (D03).', add:falta});
+  }
+
+  // Entregable
+  const entStd = hasAny(['EV04','EV05','EV06','EV07','EV08']);
+  const entL   = hasAny(BLD_LITE_DELIV);
+  if(entStd || entL){
+    out.push({level:'ok', t:(entL && !entStd) ? 'Incluye entregable: mini-reporte o reporte ligero.' : 'Incluye entregable: reporte o presentación.'});
+  } else if(has('GC-L1')){
+    out.push({level:'ok', t:'Excepción: en la geocodificación mini, el archivo procesado y su ficha de calidad son tu entregable.'});
+  } else {
+    out.push(lite
+      ? {level:'warn', t:'Falta un entregable: agrega un mini-reporte (EV-L1) o un reporte ligero (EV-L2).', add:['EV-L1']}
+      : {level:'warn', t:'Falta un entregable: agrega un reporte ejecutivo (EV04) o una presentación (EV07).', add:['EV04']});
+  }
+
+  // Reglas por módulo
+  if(has('RD02')) out.push({level:'info', t:'La canibalización entre puntos propios (RD02) requiere al menos 2 puntos tuyos.'});
+  if(hasAny(BLD_PRED)){
+    const cubierto = hasAny(['GC04','GC01']) || bldHasHistory;
+    out.push(cubierto
+      ? {level:'ok', t:'Modelo predictivo: la base de datos histórica está cubierta.', hist:true}
+      : {level:'warn', t:'Los modelos predictivos requieren una base histórica de ventas. Si no la tienes, suma el enriquecimiento de datos (GC04) y la recolección.', add:['GC04'], hist:true});
+  }
+
+  // Piso y techo (reglas C.3)
+  if(lite && total>BLD_L_CEIL)
+    out.push({level:'warn', t:'El escalón L tiene un tope de proyecto y tu selección lo rebasa. Cambia algunos módulos L por sus equivalentes estándar (nivel MID) para dimensionar bien el proyecto.'});
+  if(total>0 && total<BLD_L_FLOOR)
+    out.push({level:'warn', t: lite
+      ? 'Los módulos L no se venden sueltos por debajo del mínimo de proyecto. Combina más módulos L o revisa los paquetes L del catálogo.'
+      : 'Tu selección queda por debajo del mínimo de un proyecto. Suma módulos o revisa los paquetes L del catálogo.'});
+  return out;
+}
+const BLD_ICON = {
+  ok:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path d="m5 12 5 5L20 6"/></svg>',
+  warn: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>',
+  info: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 8h.01"/></svg>'
+};
+function bldRenderAdv(checks){
+  const el = document.getElementById('bldAdv');
+  if(!checks.length){ el.innerHTML = ''; return; }
+  el.innerHTML = `<div class="bld-advis"><h4>Reglas de combinación</h4>${checks.map(c=>{
+    const act = c.add && c.add.length
+      ? `<button class="bld-act" type="button" onclick='bldAddMany(${JSON.stringify(c.add)})'>${c.add.length>1?'Agregarlos':'Agregarlo'}</button>` : '';
+    const chk = c.hist
+      ? `<label class="bld-chk"><input type="checkbox" ${bldHasHistory?'checked':''} onchange="bldSetHistory(this.checked)"> Ya cuento con una base histórica de ventas</label>` : '';
+    return `<div class="bld-adv ${c.level}">${BLD_ICON[c.level]}<span>${c.t}${chk}${act}</span></div>`;
+  }).join('')}</div>`;
+}
+
+/* ---------- descuento por integración (C.2), sin porcentajes ---------- */
+function bldRenderVol(){
+  const el = document.getElementById('bldVol');
+  const n = bld.length;
+  if(!n){ el.innerHTML = ''; return; }
+  const tiers = [3,5,8,11];
+  let idx = -1;
+  tiers.forEach((t,i)=>{ if(n>=t) idx = i; });
+  const steps = tiers.map((t,i)=>`<div class="bld-vt ${i===idx?'on':(i<idx?'passed':'')}"><span>${t}${i===3?'+':''}</span><small>módulos</small></div>`).join('');
+  const plural = k => k>1 ? 's' : '';
+  let msg;
+  if(idx===-1){
+    msg = `Suma <b>${3-n}</b> módulo${plural(3-n)} más para activar tu descuento por integración.`;
+  } else if(idx===tiers.length-1){
+    msg = `Tu descuento por integración está en su <b>nivel máximo</b>.`;
+  } else {
+    const falta = tiers[idx+1]-n;
+    msg = `Tu descuento por integración está <b>activo</b>. Con <b>${falta}</b> módulo${plural(falta)} más sube de nivel.`;
+  }
+  el.innerHTML = `<div class="bld-voltiers"><h4>Descuento por integración</h4><div class="bld-vtl">${steps}</div><div class="bld-vmsg">${msg} El porcentaje exacto lo confirmo en tu cotización.</div></div>`;
+}
+
+/* ---------- render lateral y estado de envío ---------- */
+function bldBlocked(checks){ return (checks||bldChecks()).some(c=>c.level==='warn'); }
+function bldRenderSide(){
+  const n = bld.length;
+  const txt = n + (n===1 ? ' módulo' : ' módulos');
+  document.getElementById('bldCount').textContent = txt;
+  document.getElementById('bldFabCount').textContent = txt;
+  const checks = bldChecks();
+  bldRenderAdv(checks);
+  bldRenderVol();
+  const blocked = bldBlocked(checks);
+  document.getElementById('bldSend').disabled = (n===0 || blocked);
+  document.getElementById('bldCopy').disabled = (n===0);
+  document.getElementById('bldStatus').textContent =
+    n===0 ? 'Agrega módulos para armar tu paquete.' :
+    blocked ? 'Resuelve los pendientes en rojo para poder enviar tu paquete.' :
+    'Tu paquete cumple las reglas de combinación y está listo para enviarse.';
+}
+function bldRefresh(){
+  bldRenderLines();
+  bldRenderCond();
+  bldRenderSide();
+  document.querySelectorAll('#bldCatalog .bld-mod').forEach(row=>{
+    const inIt = bld.some(q=>q.c===row.dataset.c);
+    row.classList.toggle('in', inIt);
+    const b = row.querySelector('.bld-add');
+    if(b){ b.textContent = inIt ? '−' : '+'; b.title = inIt ? 'Quitar de mi paquete' : 'Agregar a mi paquete'; }
+  });
+}
+
+/* ---------- mensaje (sin precios) ---------- */
+function bldMessage(){
+  const name = (document.getElementById('bldName').value || '').trim();
+  const proj = (document.getElementById('bldProj').value || '').trim();
+  const L = [];
+  L.push('Hola, armé mi propio paquete en el Scorecard y me gustaría cotizarlo.');
+  L.push('');
+  if(name) L.push('Nombre: '+name);
+  if(proj) L.push('Negocio o proyecto: '+proj);
+  if(name || proj) L.push('');
+  L.push('Módulos seleccionados ('+bld.length+'):');
+  bld.forEach((it,i)=>{
+    const q = (it.kind==='formula' || it.kind==='record' || it.unit) ? ' × '+it.qty.toLocaleString('es-MX')+' '+bldUnitLabel(it) : '';
+    L.push((i+1)+'. '+it.c+' — '+it.name+q);
+  });
+  const conds = BLD_SURCH.filter(s=>bldCond[s.c]).map(s=>s.n);
+  if(conds.length || bldHasHistory){
+    L.push('');
+    L.push('Condiciones:');
+    conds.forEach(c=>L.push('- '+c));
+    if(bldHasHistory) L.push('- Cuento con base histórica de ventas');
+  }
+  L.push('');
+  L.push('¿Podemos conversar?');
+  return L.join('\n');
+}
+function bldSend(){
+  if(!bld.length || bldBlocked()) return;
+  window.open('https://wa.me/'+BLD_PHONE+'?text='+encodeURIComponent(bldMessage()), '_blank', 'noopener');
+}
+function bldCopy(){
+  if(!bld.length) return;
+  const btn = document.getElementById('bldCopy');
+  const done = ()=>{ const t=btn.textContent; btn.textContent='¡Copiado!'; setTimeout(()=>{ btn.textContent=t; },1800); };
+  const txt = bldMessage();
+  if(navigator.clipboard && navigator.clipboard.writeText){
+    navigator.clipboard.writeText(txt).then(done).catch(()=>bldCopyFallback(txt,done));
+  } else bldCopyFallback(txt,done);
+}
+function bldCopyFallback(txt,done){
+  const ta = document.createElement('textarea'); ta.value = txt; document.body.appendChild(ta); ta.select();
+  try{ document.execCommand('copy'); done(); }catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* hoja móvil */
+function bldSheet(open){
+  document.getElementById('bldQuote').classList.toggle('open', open);
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+
+
+/* ============================================================
    FONDO cartográfico (rejilla + contornos) en SVG
    ============================================================ */
 function buildGrid(el){
@@ -990,6 +1816,8 @@ renderPkgs();
 renderQuestion();
 buildGrid(document.getElementById('gridHero'));
 buildGrid(document.getElementById('gridRes'));
+bldBuildCatalog();
+bldRefresh();
 </script>
 </body>
 </html>
