@@ -1286,7 +1286,7 @@ const BLD_CATS = [
     {c:'PR06', n:'Sesión Q&A post-entrega (60 min)', p:1500, u:'sesión'},
   ]},
   {id:'B.12', t:'Soporte postventa', mods:[
-    {c:'SP01', n:'Soporte 15 días por correo', p:0, inc:true},
+    {c:'SP01', n:'Soporte 15 días por correo', p:0, req:true},
     {c:'SP02', n:'Soporte 30 días por correo + 1 llamada', p:1600},
     {c:'SP03', n:'Soporte 60 días + 2 llamadas', p:3100},
     {c:'SP04', n:'Soporte 90 días + acceso WhatsApp', p:5400},
@@ -1429,7 +1429,8 @@ function bldVolDisc(n){ return n>=11 ? .15 : n>=8 ? .12 : n>=5 ? .10 : n>=3 ? .0
 function bldCompute(){
   let sub = 0;
   bld.forEach(it=>{ sub += bldLineTotal(it); });
-  const n = bld.length;
+  // SP01 no tiene costo: no cuenta para el descuento por volumen
+  const n = bld.filter(q=>q.c!=='SP01').length;
   const base = sub*(1-bldVolDisc(n));
   let sPct = 0;
   BLD_SURCH.forEach(s=>{ if(bldCond[s.c]) sPct += s.pct; });
@@ -1445,6 +1446,7 @@ function bldMeta(m){
   if(m.f==='rd01') return 'incluye 10 puntos · se amplía por punto adicional';
   if(m.f==='ia04') return 'configuración inicial + generación por reporte';
   if(m.inc)        return 'incluido en todo proyecto';
+  if(m.req)        return 'sin costo · requerido en todo proyecto';
   if(m.u)          return 'por '+m.u;
   return 'alcance fijo';
 }
@@ -1629,6 +1631,15 @@ function bldChecks(){
       ? {level:'warn', t:'Falta un entregable: agrega un mini-reporte (EV-L1) o un reporte ligero (EV-L2).', add:['EV-L1']}
       : {level:'warn', t:'Falta un entregable: agrega un reporte ejecutivo (EV04) o una presentación (EV07).', add:['EV04']});
   }
+
+  // Soporte postventa: SP01 o cualquier otro módulo SP0x lo cubre
+  const spOtros = codes.filter(c=>/^SP0\d$/.test(c) && c!=='SP01');
+  if(has('SP01'))
+    out.push({level:'ok', t:'Soporte base cubierto: incluye 15 días por correo (SP01).'});
+  else if(spOtros.length)
+    out.push({level:'ok', t:'Soporte cubierto: tu paquete incluye soporte postventa ('+spOtros.join(', ')+').'});
+  else
+    out.push({level:'warn', t:'Todo proyecto incluye el soporte base de 15 días por correo (SP01).', add:['SP01']});
 
   // Reglas por módulo
   if(has('RD02')) out.push({level:'info', t:'La canibalización entre puntos propios (RD02) requiere al menos 2 puntos tuyos.'});
