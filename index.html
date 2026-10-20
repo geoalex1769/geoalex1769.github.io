@@ -127,6 +127,14 @@
   .faq-card .ans p{font-size:15.5px;margin-bottom:12px}
   .faq-card .ans ul{margin:0 0 14px;gap:8px}
   .faq-card .ans li{font-size:15.5px}
+  .about-card .grp{font-family:'Montserrat',sans-serif;font-size:11.5px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);margin:20px 0 8px}
+  .about-card .grp + ul{margin-bottom:6px}
+  .about-card ul + p:not(.grp){margin-top:18px}
+  .about-card .why-cta{margin-top:22px}
+  .about-card .why-cta .btn-primary{border:none;cursor:pointer}
+  .about-card .src-note{margin-top:22px;padding-top:16px;border-top:1px solid var(--line);font-family:'Montserrat',sans-serif;font-size:11px;line-height:1.7;color:var(--muted)}
+  .about-card .src-note a{color:var(--coral);text-decoration:underline}
+  .about-card .src-note p{font-family:inherit;font-size:inherit;line-height:inherit;color:inherit;margin:0 0 8px}
   .carto-table-wrap{overflow-x:auto;margin:6px 0 20px;border:1px solid var(--line);border-radius:10px}
   .carto-table{width:100%;border-collapse:collapse;min-width:560px;font-size:15px;line-height:1.5}
   .carto-table th{background:var(--ink);color:#EDEAE0;font-family:'Montserrat',sans-serif;font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-align:left;padding:11px 14px}
@@ -797,6 +805,32 @@
       <li><span><b>Evaluar la red actual:</b> detectar zonas saturadas o sin cobertura.</span></li>
     </ul>
     <p>Las fuentes de datos más comunes son los censos y estadísticas oficiales (en México, por ejemplo, los del INEGI), los datos propios de la empresa, la información de teléfonos móviles y las bases de puntos de interés. Entre las herramientas más usadas están QGIS, ArcGIS, Google Maps Platform y Power BI con mapas.</p>
+    <h3>Si ellos lo usan, ¿por qué tú no?</h3>
+    <p>El geomarketing no es cosa exclusiva de los gigantes. Algunas de las marcas más conocidas del mundo usan datos de ubicación para tomar decisiones:</p>
+    <p class="grp">Dónde abrir</p>
+    <ul>
+      <li><span><b>Starbucks</b> ha usado Atlas, una aplicación de GIS, para identificar la mejor ubicación de su próxima tienda.</span></li>
+      <li><span><b>McDonald's</b> usa en Alemania una plataforma de análisis de ubicaciones, basada en cálculos de tiempos de traslado, para planear nuevos restaurantes.</span></li>
+      <li><span><b>Yum! Brands</b> (KFC, Pizza Hut y Taco Bell) puntúa y ordena ubicaciones candidatas con datos de puntos de interés, y visualiza las zonas saturadas o idóneas.</span></li>
+      <li><span><b>General Motors</b> combina datos del censo con perfiles de consumidores para decidir dónde abrir un concesionario nuevo y evitar que se traslapen entre sí.</span></li>
+    </ul>
+    <p class="grp">Territorios, rutas y entregas</p>
+    <ul>
+      <li><span><b>Domino's Pizza</b> (Australia) define los territorios de sus franquicias según los hogares alcanzables y dirige cada pedido a la tienda más cercana.</span></li>
+      <li><span><b>UPS</b> recalcula durante el día las rutas de sus conductores según el tráfico y los pedidos, y reporta un ahorro de unos 100 millones de millas y 10 millones de galones de combustible al año.</span></li>
+      <li><span><b>Uber</b> usa datos de tráfico y de ubicación en tiempo real para asignar trayectos más eficientes.</span></li>
+      <li><span><b>Amazon</b> ofrece opciones de envío rápido según la ubicación del cliente.</span></li>
+    </ul>
+    <p class="grp">Publicidad por cercanía</p>
+    <ul>
+      <li><span><b>McDonald's</b> envía ofertas y cupones personalizados, desde su aplicación, a quienes están cerca de uno de sus restaurantes.</span></li>
+    </ul>
+    <p>Hacen lo mismo que tú necesitas: responder la pregunta “¿dónde?” con evidencia y no con corazonadas. La diferencia está en la escala, y por eso diseñamos paquetes para negocios de todos los tamaños, desde el primer local hasta la cadena.</p>
+    <div class="why-cta"><button class="btn-primary" type="button" onclick="openQuiz()">Descubre qué paquete te conviene</button></div>
+    <div class="src-note">
+      <p><b>Fuentes:</b> <a href="https://www.esri.com/about/newsroom/arcwatch/going-big-with-gis" target="_blank" rel="noopener">Esri (Starbucks, 2014)</a> · <a href="https://retail-optimiser.de/en/mcdonalds-selects-targomo-platform-for-expansion-planning/" target="_blank" rel="noopener">Retail Optimiser (McDonald's Alemania, 2022)</a> · <a href="https://foursquare.com/resources/blog/data/how-one-of-the-worlds-largest-restaurant-brands-makes-smarter-site-selection/" target="_blank" rel="noopener">Foursquare (Yum! Brands, 2021)</a> · <a href="https://www.esri.com/en-us/landing-page/corporate-programs/2019/general-motors-case-study" target="_blank" rel="noopener">Esri (General Motors)</a> · <a href="https://www.precisely.com/resource-center/customerstories/dominos-pizza-streamlines-franchise-planning-using-location-intelligence/" target="_blank" rel="noopener">Precisely (Domino's Pizza)</a> · <a href="https://about.ups.com/ae/en/newsroom/press-releases/innovation-driven/ups-to-enhance-orion-with-continuous-delivery-route-optimization.html" target="_blank" rel="noopener">UPS (ORION)</a> · <a href="https://blog.bancolombia.com/negocios/que-es-geomarketing/" target="_blank" rel="noopener">Blog de Bancolombia (Uber, Amazon y McDonald's)</a>.</p>
+      <p>Los casos de Yum! Brands y Domino's los publican proveedores de tecnología, y las cifras son las que ellos reportan. GeoMerca no tiene relación con las empresas mencionadas; sus nombres y marcas pertenecen a sus respectivos titulares.</p>
+    </div>
   </div>
 </section>
 
